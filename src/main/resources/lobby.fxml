@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.Controller">
+    <center>
+        <VBox spacing="10">
+            <ListView fx:id="playersListView"/>
+            <TextField fx:id="messageField" promptText="Type a message..."/>
+        </VBox>
+    </center>
+</BorderPane>
