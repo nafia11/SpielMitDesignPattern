@@ -1,5 +1,6 @@
 package org.example.server;
 
+import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.lobby.Model;
@@ -66,7 +67,11 @@ public class ClientHandler implements Runnable {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                broadcastMessage(username + ": " + message);
+                if (message.startsWith("CHANGE_USERNAME ")) {
+                    handleUsernameChange(message.substring(16));
+                } else {
+                    broadcastMessage(username + ": " + message);
+                }
             }
         } catch (SocketException e) {
             logger.trace("Client disconnected unexpectedly: ", e);
@@ -77,11 +82,31 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void handleUsernameChange(String newUsername) {
+        if (usernameManager.isUsernameAvailable(newUsername)) {
+            String oldUsername = username;
+            usernameManager.releaseUsername(username);
+            username = usernameManager.getAvailableUsername(newUsername);
+
+            // Notify all clients of the username change
+            for (ClientHandler client : connectedClients) {
+                client.sendMessage("Player " + oldUsername + " changed username to " + username);
+            }
+
+            // Update lobby GUI on JavaFX Application Thread
+            Platform.runLater(() -> {
+                model.removePlayer(oldUsername);
+                model.addPlayer(username);
+            });
+        } else {
+            sendMessage("SERVER: The username '" + newUsername + "' is not available. Please choose a different one.");
+        }
+    }
+
     private void broadcastMessage(String message) {
         for (ClientHandler client : connectedClients) {
             client.sendMessage(message);
         }
-        // Update lobby and GUI (if needed)
     }
 
     public void sendMessage(String message) {

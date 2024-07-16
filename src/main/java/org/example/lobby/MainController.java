@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.example.client.Client;
@@ -17,6 +18,8 @@ public class MainController {
     private VBox chatBox;
     @FXML
     private Label usernameLabel;
+    @FXML
+    private TextArea chatArea;
 
     private Model model;
     private Client client;
@@ -49,6 +52,11 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void showPlayers() {
+        client.sendMessage("SHOW_PLAYERS"); // Command to server to send the list of players
+    }
+
     public void addPlayer(String player) {
         Platform.runLater(() -> model.addPlayer(player));
     }
@@ -59,7 +67,22 @@ public class MainController {
 
     public void receiveMessage(String message) {
         Platform.runLater(() -> {
-            // Handle message reception in GUI
+            if (message.startsWith("New player: ")) {
+                String newPlayer = message.substring(12);
+                model.addPlayer(newPlayer);
+            } else if (message.startsWith("Player left: ")) {
+                String playerLeft = message.substring(13);
+                model.removePlayer(playerLeft);
+            } else if (message.startsWith("Player ") && message.contains("changed username to")) {
+                String[] parts = message.split(" ");
+                String oldUsername = parts[1];
+                String newUsername = parts[4];
+
+                model.removePlayer(oldUsername);
+                model.addPlayer(newUsername);
+            } else {
+                chatArea.appendText(message + "\n");
+            }
         });
     }
 }

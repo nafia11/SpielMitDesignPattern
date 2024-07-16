@@ -2,7 +2,6 @@ package org.example.client;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.control.TextInputDialog;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.lobby.MainApp;
@@ -21,9 +20,28 @@ public class Client {
     static Logger logger = LogManager.getLogger(Client.class);
     private String username;
 
+    public interface UsernameValidationListener {
+        void onUsernameValidated(String validUsername);
+        void onUsernameInvalid(String serverMessage);
+    }
+
+    private UsernameValidationListener usernameValidationListener;
+
     public Client(String username) {
         this.username = username;
-        connectToServer();
+        new Thread(this::connectToServer).start();
+    }
+
+    public void setUsernameValidationListener(UsernameValidationListener listener) {
+        this.usernameValidationListener = listener;
+    }
+
+    public void setController(MainController controller) {
+        this.controller = controller;
+    }
+
+    public void setUsername(String newUsername) {
+        sendMessage("CHANGE_USERNAME " + newUsername);
     }
 
     private void connectToServer() {
@@ -42,89 +60,92 @@ public class Client {
         }
     }
 
-    private void requestUsername() throws IOException {
-        writer.write(username);
-        writer.newLine();
-        writer.flush();
+    public void requestUsername() {
+        try {
+            writer.write(username);
+            writer.newLine();
+            writer.flush();
 
-        String serverResponse = reader.readLine();
-        if (serverResponse.startsWith("The username")) {
-            Platform.runLater(() -> {
-                TextInputDialog dialog = new TextInputDialog();
-                dialog.setHeaderText(serverResponse);
-                dialog.setContentText("Please enter a new username:");
-                dialog.showAndWait().ifPresent(newUsername -> {
-                    try {
-                        username = newUsername.trim();
-                        requestUsername();
-                    } catch (IOException e) {
-                        logger.error("Failed to request new username: ", e);
-                    }
-                });
-            });
-        } else {
-            this.username = serverResponse; // Server approved username
+            String serverResponse = reader.readLine();
+            if (serverResponse.startsWith("The username")) {
+                if (usernameValidationListener != null) {
+                    usernameValidationListener.onUsernameInvalid(serverResponse);
+                }
+            } else {
+                this.username = serverResponse; // Server approved username
+                if (usernameValidationListener != null) {
+                    usernameValidationListener.onUsernameValidated(this.username);
+                }
+                if (controller != null) {
+                    Platform.runLater(() -> controller.setUsername(this.username));
+                }
+            }
+        } catch (IOException e) {
+            logger.error("Failed to request username: ", e);
+            shutdown();
         }
-    }
-
-    public void setController(MainController controller) {
-        this.controller = controller;
     }
 
     public void sendMessage(String message) {
-        try {
-            writer.write(message);
-            writer.newLine();
-            writer.flush();
-        } catch (SocketException se) {
-            logger.error("Connection to the server lost: ", se);
-            running = false;
-            shutdown();
-        } catch (IOException e) {
-            logger.error("Failed to send message: ", e);
-        }
+        new Thread(() -> {
+            try {
+                writer.write(message);
+                writer.newLine();
+                writer.flush();
+            } catch (SocketException se) {
+                logger.error("Connection to the server lost: ", se);
+                shutdown();
+            } catch (IOException e) {
+                logger.error("Failed to send message: ", e);
+            }
+        }).start();
     }
 
     private void receiveMessages() {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                if (message.startsWith("New player: ")) {
-                    String newPlayer = message.substring(12);
-                    if (controller != null) {
-                        controller.addPlayer(newPlayer);
-                    }
-                } else if (message.startsWith("Player left: ")) {
-                    String playerLeft = message.substring(13);
-                    if (controller != null) {
-                        controller.removePlayer(playerLeft);
-                    }
+                if (message.startsWith("CHANGE_USERNAME")) {
+                    handleUsernameChange(message.substring(15));
                 } else {
-                    // Handle regular messages
-                    if (controller != null) {
-                        controller.receiveMessage(message);
-                    }
+                    String finalMessage = message;
+                    Platform.runLater(() -> {
+                        if (controller != null) {
+                            controller.receiveMessage(finalMessage);
+                        }
+                    });
                 }
             }
+        } catch (SocketException se) {
+            logger.error("Connection to the server lost: ", se);
+            shutdown();
         } catch (IOException e) {
-            logger.trace("Error receiving message: ", e);
+            logger.error("Error receiving message: ", e);
+            shutdown();
         } finally {
             shutdown();
         }
     }
 
+    private void handleUsernameChange(String newUsername) {
+        this.username = newUsername;
+        if (controller != null) {
+            Platform.runLater(() -> controller.setUsername(this.username));
+        }
+    }
+
     public void shutdown() {
         try {
+            running = false;
             if (reader != null) reader.close();
             if (writer != null) writer.close();
             if (socket != null) socket.close();
         } catch (IOException e) {
             logger.error("Error closing resources: ", e);
         }
-        running = false;
     }
 
     public static void main(String[] args) {
-        Application.launch(MainApp.class, args); // Use if extending Application
+        Application.launch(MainApp.class, args);
     }
 }
