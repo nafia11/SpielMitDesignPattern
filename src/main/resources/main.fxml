@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.MainController">
+    <top>
+        <HBox spacing="10" alignment="CENTER">
+            <Label fx:id="usernameLabel" text="Username: "/>
+            <Button text="Chat" onAction="#showChat"/>
+            <Button text="Start Game"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="10" visible="false" fx:id="chatBox">
+            <ListView fx:id="playersListView"/>
+            <TextField fx:id="messageField" promptText="Type a message..." onAction="#sendMessage"/>
+        </VBox>
+    </center>
+</BorderPane>

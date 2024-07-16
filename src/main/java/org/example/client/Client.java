@@ -1,10 +1,12 @@
 package org.example.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.control.TextInputDialog;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.lobby.Controller;
 import org.example.lobby.MainApp;
+import org.example.lobby.MainController;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,18 +17,22 @@ public class Client {
     private BufferedReader reader;
     private BufferedWriter writer;
     private boolean running = true;
-    private Controller controller;
+    private MainController controller;
     static Logger logger = LogManager.getLogger(Client.class);
+    private String username;
 
     public Client(String username) {
+        this.username = username;
+        connectToServer();
+    }
+
+    private void connectToServer() {
         try {
             socket = new Socket("127.0.0.1", 111);
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            writer.write(username);
-            writer.newLine();
-            writer.flush();
+            requestUsername();
 
             Thread receiveThread = new Thread(this::receiveMessages);
             receiveThread.start();
@@ -36,7 +42,32 @@ public class Client {
         }
     }
 
-    public void setController(Controller controller) {
+    private void requestUsername() throws IOException {
+        writer.write(username);
+        writer.newLine();
+        writer.flush();
+
+        String serverResponse = reader.readLine();
+        if (serverResponse.startsWith("The username")) {
+            Platform.runLater(() -> {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setHeaderText(serverResponse);
+                dialog.setContentText("Please enter a new username:");
+                dialog.showAndWait().ifPresent(newUsername -> {
+                    try {
+                        username = newUsername.trim();
+                        requestUsername();
+                    } catch (IOException e) {
+                        logger.error("Failed to request new username: ", e);
+                    }
+                });
+            });
+        } else {
+            this.username = serverResponse; // Server approved username
+        }
+    }
+
+    public void setController(MainController controller) {
         this.controller = controller;
     }
 
