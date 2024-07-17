@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,9 +12,14 @@
                 <TextField fx:id="messageField" onAction="#sendMessage"/>
                 <Button text="Send" onAction="#sendMessage"/>
             </HBox>
+            <HBox>
+                <TextField fx:id="newUsernameField" promptText="Enter new username"/>
+                <Button text="Change Username" onAction="#changeUsername"/>
+            </HBox>
         </VBox>
     </center>
     <top>
         <Label fx:id="usernameLabel"/>
     </top>
 </BorderPane>
+

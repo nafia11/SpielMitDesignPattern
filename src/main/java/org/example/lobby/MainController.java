@@ -20,6 +20,8 @@ public class MainController {
     private Label usernameLabel;
     @FXML
     private TextArea chatArea;
+    @FXML
+    private TextField newUsernameField;
 
     private Model model;
     private Client client;
@@ -32,10 +34,27 @@ public class MainController {
     public void setClient(Client client) {
         this.client = client;
         this.client.setController(this);
+        this.client.setUsernameValidationListener(new Client.UsernameValidationListener() {
+            @Override
+            public void onUsernameValidated(String validUsername) {
+                Platform.runLater(() -> usernameLabel.setText("Username: " + validUsername));
+            }
+
+            @Override
+            public void onUsernameInvalid(String serverMessage) {
+                Platform.runLater(() -> {
+                    // Show an alert or prompt for a new username
+                    // For simplicity, set a label with server message
+                    usernameLabel.setText(serverMessage);
+                });
+            }
+        });
     }
 
     public void setUsername(String username) {
-        Platform.runLater(() -> usernameLabel.setText("Username: " + username));
+        Platform.runLater(() -> {
+            usernameLabel.setText("Username: " + username);
+        });
     }
 
     @FXML
@@ -76,7 +95,7 @@ public class MainController {
             } else if (message.startsWith("Player ") && message.contains("changed username to")) {
                 String[] parts = message.split(" ");
                 String oldUsername = parts[1];
-                String newUsername = parts[4];
+                String newUsername = parts[5];
 
                 model.removePlayer(oldUsername);
                 model.addPlayer(newUsername);
@@ -84,5 +103,13 @@ public class MainController {
                 chatArea.appendText(message + "\n");
             }
         });
+    }
+
+    @FXML
+    private void changeUsername() {
+        String newUsername = newUsernameField.getText().trim();
+        if (!newUsername.isEmpty()) {
+            client.setUsername(newUsername);
+        }
     }
 }
