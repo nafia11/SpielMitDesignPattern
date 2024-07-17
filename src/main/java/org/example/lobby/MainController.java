@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.example.client.Client;
 
+import java.util.Arrays;
+
 public class MainController {
     @FXML
     private ListView<String> playersListView;
@@ -28,8 +30,11 @@ public class MainController {
 
     public void initialize() {
         model = new Model();
+        model.getPlayers().clear();
         playersListView.setItems(model.getPlayers());
     }
+
+
 
     public void setClient(Client client) {
         this.client = client;
@@ -112,4 +117,11 @@ public class MainController {
             client.setUsername(newUsername);
         }
     }
+    public void updatePlayersList(String playersList) {
+        String[] players = playersList.split(",");
+        model.getPlayers().clear();
+        model.getPlayers().addAll(Arrays.asList(players));
+    }
 }
+
+

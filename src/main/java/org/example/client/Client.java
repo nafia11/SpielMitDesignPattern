@@ -101,11 +101,25 @@ public class Client {
         }).start();
     }
 
+    private void sendPing() {
+        try {
+            sendMessage("PING");
+            Thread.sleep(5000); // Adjust as needed
+        } catch (InterruptedException e) {
+            logger.error("Ping thread interrupted: ", e);
+        }
+    }
+
     private void receiveMessages() {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                if (message.startsWith("CHANGE_USERNAME")) {
+                if (message.equals("PING")) {
+                    sendMessage("PONG");
+                } else if (message.startsWith("PLAYER_LIST")) {
+                    String playersList = message.substring(11);
+                    Platform.runLater(() -> controller.updatePlayersList(playersList));
+                } else if (message.startsWith("CHANGE_USERNAME")) {
                     handleUsernameChange(message.substring(15));
                 } else {
                     String finalMessage = message;
@@ -126,6 +140,8 @@ public class Client {
             shutdown();
         }
     }
+
+
 
     private void handleUsernameChange(String newUsername) {
         this.username = newUsername;

@@ -59,15 +59,19 @@ public class ClientHandler implements Runnable {
         }
 
         // Update lobby GUI
-        updateLobbyPlayers();
+//        updateLobbyPlayers();
+        sendPlayerList();
     }
+
 
     @Override
     public void run() {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                if (message.startsWith("CHANGE_USERNAME ")) {
+                if (message.equals("PING")) {
+                    sendMessage("PONG");
+                } else if (message.startsWith("CHANGE_USERNAME ")) {
                     handleUsernameChange(message.substring(16));
                 } else {
                     broadcastMessage(username + ": " + message);
@@ -81,6 +85,10 @@ public class ClientHandler implements Runnable {
             cleanup();
         }
     }
+
+
+
+
 
     private void handleUsernameChange(String newUsername) {
         if (usernameManager.isUsernameAvailable(newUsername)) {
@@ -106,8 +114,18 @@ public class ClientHandler implements Runnable {
     private void broadcastMessage(String message) {
         for (ClientHandler client : connectedClients) {
             client.sendMessage(message);
+            client.sendPlayerList(); // Send updated player list to all clients
         }
     }
+
+    private void sendPlayerList() {
+        StringBuilder playerListMessage = new StringBuilder("PLAYER_LIST");
+        for (String player : model.getPlayers()) {
+            playerListMessage.append(",").append(player);
+        }
+        sendMessage(playerListMessage.toString());
+    }
+
 
     public void sendMessage(String message) {
         try {
@@ -131,8 +149,12 @@ public class ClientHandler implements Runnable {
         logger.info("Client disconnected: {}", username);
 
         // Update lobby GUI
-        updateLobbyPlayers();
+//        Platform.runLater(this::updateLobbyPlayers);
+        for (ClientHandler client : connectedClients) {
+            client.sendPlayerList();
+        }
     }
+
 
     private void closeResources() {
         try {

@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.VBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.lobby.MainController">
     <center>
-        <VBox>
-            <ListView fx:id="playersListView"/>
+        <VBox style="-fx-padding: 0; -fx-spacing: 0;" VBox.vgrow="ALWAYS">
+            <ListView fx:id="playersListView" VBox.vgrow="ALWAYS" />
             <TextArea fx:id="chatArea" editable="false"/>
             <HBox>
                 <TextField fx:id="messageField" onAction="#sendMessage"/>
@@ -22,4 +22,5 @@
         <Label fx:id="usernameLabel"/>
     </top>
 </BorderPane>
+
 
