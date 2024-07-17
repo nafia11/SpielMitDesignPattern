@@ -32,3 +32,4 @@ javafx {
     modules = listOf("javafx.controls", "javafx.fxml", "javafx.base", "javafx.graphics", "javafx.media")
 }
 
+

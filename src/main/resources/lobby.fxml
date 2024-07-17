@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.Controller">
-    <center>
-        <VBox spacing="10">
-            <ListView fx:id="playersListView"/>
-            <TextField fx:id="messageField" promptText="Type a message..."/>
-        </VBox>
-    </center>
-</BorderPane>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.LobbyController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <ListView fx:id="playerListView" />
+    <TextArea fx:id="chatArea" editable="false" />
+    <TextArea fx:id="chatInput" prefHeight="50" />
+    <Button text="Send" onAction="#sendMessage" />
+</VBox>
