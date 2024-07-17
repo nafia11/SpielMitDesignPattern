@@ -1,6 +1,7 @@
 package org.example.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.lobby.LobbyController;
@@ -19,7 +20,7 @@ public class GameClient {
     private LobbyController lobbyController;
 
     public GameClient(String username) {
-        this.username = username;
+        GameClient.username = username.trim();
         connectToServer();
     }
 
@@ -60,11 +61,8 @@ public class GameClient {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-//                logger.info("Received message from server: " + message); // Logging received messages
-//                lobbyController.addMessageToChat(message);
                 if (message.startsWith("CHAT")) {
                     String chatMessage = message.substring(5);
-                    System.out.println("chat: " + message); // Add this line for debugging
                     if (lobbyController != null) {
                         lobbyController.addMessageToChat(chatMessage);
                     } else {
@@ -75,6 +73,9 @@ public class GameClient {
                     if (lobbyController != null) {
                         lobbyController.updatePlayerList(players);
                     }
+                } else if (message.startsWith("USERNAME_TAKEN")) {
+                    String suggestedUsername = message.substring(14);
+                    Platform.runLater(() -> lobbyController.promptForNewUsername(suggestedUsername));
                 }
             }
         } catch (SocketException se) {
@@ -86,6 +87,11 @@ public class GameClient {
         } finally {
             shutdown();
         }
+    }
+    public void disconnect() {
+        sendMessage("DISCONNECT"); // Optionally inform the server that the client is disconnecting
+        shutdown();
+        Platform.exit(); // Close the application after disconnecting
     }
 
 

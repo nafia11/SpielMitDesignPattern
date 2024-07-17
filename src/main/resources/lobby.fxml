@@ -14,4 +14,9 @@
     <TextArea fx:id="chatArea" editable="false" />
     <TextArea fx:id="chatInput" prefHeight="50" />
     <Button text="Send" onAction="#sendMessage" />
+    <TextArea fx:id="usernameDisplay" editable="false" />
+    <Button text="Change Username" onAction="#changeUsername" />
+    <Button text="Disconnect" onAction="#disconnect" />
 </VBox>
+
+

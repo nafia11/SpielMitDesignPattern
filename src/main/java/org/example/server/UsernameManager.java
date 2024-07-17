@@ -3,28 +3,21 @@ package org.example.server;
 import java.util.HashMap;
 
 public class UsernameManager {
-    private HashMap<String, Boolean> usernameAvailability;
-
-    public UsernameManager() {
-        usernameAvailability = new HashMap<>();
-    }
+    private final HashMap<String, Boolean> usernameAvailability = new HashMap<>();
 
     public boolean isUsernameAvailable(String username) {
-        return !usernameAvailability.containsKey(username) || !usernameAvailability.get(username);
+        return !usernameAvailability.getOrDefault(username.trim(), false);
     }
 
-
     public String getAvailableUsername(String desiredUsername) {
-        if (isUsernameAvailable(desiredUsername)) {
-            usernameAvailability.put(desiredUsername, true);
-            return desiredUsername;
+        String username = desiredUsername.trim();
+        if (isUsernameAvailable(username)) {
+            usernameAvailability.put(username, true);
+            return username;
         } else {
-            if (desiredUsername.isEmpty()) {
-                desiredUsername = "User";
-            }
             int suffix = 1;
             while (true) {
-                String altUsername = desiredUsername + suffix;
+                String altUsername = username + suffix;
                 if (isUsernameAvailable(altUsername)) {
                     usernameAvailability.put(altUsername, true);
                     return altUsername;
@@ -34,8 +27,7 @@ public class UsernameManager {
         }
     }
 
-
     public void releaseUsername(String username) {
-        usernameAvailability.put(username, false);
+        usernameAvailability.put(username.trim(), false);
     }
 }

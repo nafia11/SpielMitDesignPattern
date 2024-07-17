@@ -55,19 +55,24 @@ public class ClientHandler implements Runnable {
     }
 
     public String getUsername() {
-        return username;
+        return username.trim(); // Trim any extra spaces
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.trim(); // Trim any extra spaces
     }
 
-    private void cleanup() {
+    public void cleanup() {
         try {
             connectedClients.remove(this);
+            gameState.removePlayer(username);
+            for (ClientHandler handler : connectedClients) {
+                handler.sendMessage("UPDATE_PLAYERS " + String.join(",", gameState.getPlayerList()));
+            }
             socket.close();
         } catch (IOException e) {
             logger.error("Error closing connection: ", e);
         }
     }
+
 }

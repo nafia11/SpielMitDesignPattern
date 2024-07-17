@@ -1,20 +1,20 @@
 package org.example.game;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameState {
-    private final ObservableList<String> players = FXCollections.observableArrayList();
+    private final List<String> players = new ArrayList<>();
 
-    public void addPlayer(String player) {
-        players.add(player);
+    public void addPlayer(String username) {
+        players.add(username);
     }
 
-    public void removePlayer(String player) {
-        players.remove(player);
+    public void removePlayer(String username) {
+        players.remove(username);
     }
 
-    public ObservableList<String> getPlayers() {
-        return players;
+    public List<String> getPlayerList() {
+        return new ArrayList<>(players);
     }
 }

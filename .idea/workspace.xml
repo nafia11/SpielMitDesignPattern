@@ -5,23 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/server/GameServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/server/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/server/UsernameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/server/UsernameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lobby.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/login.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +78,7 @@
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GameClient">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.client.Client" />
       <module name="SpielMitDesignPattern.main" />
@@ -180,7 +171,8 @@
       <workItem from="1721087545993" duration="5039000" />
       <workItem from="1721157973281" duration="14148000" />
       <workItem from="1721174128362" duration="368000" />
-      <workItem from="1721222669536" duration="10935000" />
+      <workItem from="1721222669536" duration="11272000" />
+      <workItem from="1721243797341" duration="2641000" />
     </task>
     <servers />
   </component>
