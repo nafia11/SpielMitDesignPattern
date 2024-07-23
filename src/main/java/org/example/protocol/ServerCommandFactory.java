@@ -60,14 +60,16 @@ class JoinCommand implements ServerCommand {
             clientHandler.sendMessage("USERNAME_TAKEN " + assignedUsername);
         } else {
             gameState.addPlayer(assignedUsername);
+            usernameManager.reserveUsername(assignedUsername); // Reserve the username after confirming
             clientHandler.setUsername(assignedUsername);
             for (ClientHandler handler : clientHandler.getConnectedClients()) {
-                handler.sendMessage("CHAT " + "User " + assignedUsername + " has joined.");
+                handler.sendMessage("CHAT User " + assignedUsername + " has joined.");
                 handler.sendMessage("UPDATE_PLAYERS " + String.join(",", gameState.getPlayerList()));
             }
         }
     }
 }
+
 
 class UpdateUsernameCommand implements ServerCommand {
     private final String newUsername;
@@ -89,8 +91,9 @@ class UpdateUsernameCommand implements ServerCommand {
         if (!assignedUsername.equals(newUsername)) {
             clientHandler.sendMessage("USERNAME_TAKEN " + assignedUsername);
         } else {
+            usernameManager.releaseUsername(currentUsername); // Release the old username
+            usernameManager.reserveUsername(newUsername); // Reserve the new username
             gameState.removePlayer(currentUsername);
-            usernameManager.releaseUsername(currentUsername);
             gameState.addPlayer(newUsername);
             clientHandler.setUsername(newUsername);
             for (ClientHandler handler : clientHandler.getConnectedClients()) {
@@ -100,6 +103,7 @@ class UpdateUsernameCommand implements ServerCommand {
         }
     }
 }
+
 
 class DisconnectCommand implements ServerCommand {
     private final ClientHandler clientHandler;

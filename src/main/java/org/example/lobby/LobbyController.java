@@ -76,7 +76,8 @@ public class LobbyController {
             dialog.setContentText("New Username:");
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(newUsername -> gameClient.sendMessage("UPDATE_USERNAME " + newUsername));
+            result.ifPresent(newUsername -> gameClient.sendMessage("UPDATE_USERNAME " + newUsername.trim()));
         });
     }
+
 }

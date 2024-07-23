@@ -12,20 +12,23 @@ public class UsernameManager {
     public String getAvailableUsername(String desiredUsername) {
         String username = desiredUsername.trim();
         if (isUsernameAvailable(username)) {
-            usernameAvailability.put(username, true);
             return username;
         } else {
             int suffix = 1;
             while (true) {
                 String altUsername = username + suffix;
                 if (isUsernameAvailable(altUsername)) {
-                    usernameAvailability.put(altUsername, true);
                     return altUsername;
                 }
                 suffix++;
             }
         }
     }
+
+    public void reserveUsername(String username) {
+        usernameAvailability.put(username.trim(), true);
+    }
+
 
     public void releaseUsername(String username) {
         usernameAvailability.put(username.trim(), false);
