@@ -6,6 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.client.GameClient;
 
@@ -20,6 +24,8 @@ public class LobbyController {
     private TextArea chatInput;
     @FXML
     private TextArea usernameDisplay;
+    @FXML
+    private Pane playerFiguresPane;
 
     private GameClient gameClient;
 
@@ -36,6 +42,7 @@ public class LobbyController {
             chatInput.clear();
         }
     }
+
     @FXML
     private void changeUsername() {
         TextInputDialog dialog = new TextInputDialog(gameClient.getUsername());
@@ -59,13 +66,36 @@ public class LobbyController {
         }
     }
 
-
     public void addMessageToChat(String message) {
         Platform.runLater(() -> chatArea.appendText(message + "\n"));
     }
 
     public void updatePlayerList(String[] players) {
-        Platform.runLater(() -> playerListView.setItems(FXCollections.observableArrayList(players)));
+        Platform.runLater(() -> {
+            playerListView.setItems(FXCollections.observableArrayList(players));
+            updatePlayerFigures(players);
+        });
+    }
+
+    private void updatePlayerFigures(String[] players) {
+        playerFiguresPane.getChildren().clear();
+        for (int i = 0; i < players.length; i++) {
+            String player = players[i];
+
+            // Create an image view for the player figure
+            ImageView playerFigure = new ImageView(new Image(getClass().getResourceAsStream("/images/player_icon.png")));
+            playerFigure.setFitWidth(50);
+            playerFigure.setFitHeight(50);
+            playerFigure.setLayoutX(10 + (i * 60)); // Adjust layout as needed
+            playerFigure.setLayoutY(10);
+
+            // Create a text label for the player name
+            Text playerName = new Text(player);
+            playerName.setX(10 + (i * 60)); // Adjust layout as needed
+            playerName.setY(70); // Position below the figure
+
+            playerFiguresPane.getChildren().addAll(playerFigure, playerName);
+        }
     }
 
     public void promptForNewUsername(String suggestedUsername) {
@@ -76,8 +106,7 @@ public class LobbyController {
             dialog.setContentText("New Username:");
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(newUsername -> gameClient.sendMessage("UPDATE_USERNAME " + newUsername.trim()));
+            result.ifPresent(newUsername -> gameClient.sendMessage("UPDATE_USERNAME " + newUsername));
         });
     }
-
 }

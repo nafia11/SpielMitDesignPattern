@@ -4,19 +4,24 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.LobbyController">
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
-    <ListView fx:id="playerListView" />
-    <TextArea fx:id="chatArea" editable="false" />
-    <TextArea fx:id="chatInput" prefHeight="50" />
-    <Button text="Send" onAction="#sendMessage" />
-    <TextArea fx:id="usernameDisplay" editable="false" />
-    <Button text="Change Username" onAction="#changeUsername" />
-    <Button text="Disconnect" onAction="#disconnect" />
-</VBox>
-
-
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.LobbyController">
+    <children>
+        <VBox spacing="10" style="-fx-background-image: url('images/background.jpg'); -fx-background-size: cover;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Pane fx:id="playerFiguresPane" prefHeight="100" />
+            <ListView fx:id="playerListView" />
+            <TextArea fx:id="chatArea" editable="false" />
+            <TextArea fx:id="chatInput" prefHeight="50" />
+            <Button text="Send" onAction="#sendMessage" />
+            <TextArea fx:id="usernameDisplay" editable="false" />
+            <Button text="Change Username" onAction="#changeUsername" />
+            <Button text="Disconnect" onAction="#disconnect" />
+        </VBox>
+    </children>
+</StackPane>
