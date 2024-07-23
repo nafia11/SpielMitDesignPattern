@@ -1,14 +1,30 @@
 /* styles.css */
 
+/*.username-display {*/
+/*    -fx-background-color: #f0f0f0;*/
+/*    -fx-background-radius: 10;*/
+/*    -fx-padding: 5 10;*/
+/*    -fx-font-size: 14px;*/
+/*    -fx-border-color: #ccc;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-border-width: 1;*/
+/*    -fx-font-weight: bold; !* Make the text bold *!*/
+/*}*/
+
 .username-display {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: rgba(75, 39, 13, 0.5); /* Set a brown background color with 50% opacity */
     -fx-background-radius: 10;
     -fx-padding: 5 10;
     -fx-font-size: 14px;
-    -fx-border-color: #ccc;
+    -fx-border-color: #95b0e7;
     -fx-border-radius: 10;
     -fx-border-width: 1;
+    -fx-font-weight: bold; /* Make the text bold */
+    -fx-text-fill: #0d0d0e; /* Set the text color to a yellowish color */
 }
+
+
+
 
 .button {
     -fx-background-color: linear-gradient(to bottom right, #4caf50, #388e3c);
@@ -24,4 +40,16 @@
 
 .button:pressed {
     -fx-background-color: linear-gradient(to bottom right, #388e3c, #2e7d32);
+}
+
+.square-button {
+    -fx-background-color: #8B4513; /* Set the background color */
+    -fx-background-radius: 0; /* Square corners */
+    -fx-padding: 10 20; /* Padding for the button */
+    -fx-font-size: 14px; /* Font size */
+    -fx-border-color: #ccc; /* Border color */
+    -fx-border-radius: 0; /* Square corners for the border */
+    -fx-border-width: 1; /* Border width */
+    -fx-font-weight: bold; /* Make the text bold */
+    -fx-text-fill: #f5d24f; /* Text color */
 }
