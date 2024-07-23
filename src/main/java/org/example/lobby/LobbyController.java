@@ -1,10 +1,9 @@
 package org.example.lobby;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,13 +16,11 @@ import java.util.Optional;
 
 public class LobbyController {
     @FXML
-    private ListView<String> playerListView;
-    @FXML
     private TextArea chatArea;
     @FXML
-    private TextArea chatInput;
+    private TextField chatInput;
     @FXML
-    private TextArea usernameDisplay;
+    private TextField usernameDisplay;
     @FXML
     private Pane playerFiguresPane;
 
@@ -71,10 +68,7 @@ public class LobbyController {
     }
 
     public void updatePlayerList(String[] players) {
-        Platform.runLater(() -> {
-            playerListView.setItems(FXCollections.observableArrayList(players));
-            updatePlayerFigures(players);
-        });
+        Platform.runLater(() -> updatePlayerFigures(players));
     }
 
     private void updatePlayerFigures(String[] players) {
