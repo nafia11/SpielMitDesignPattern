@@ -57,7 +57,7 @@ public class MainApp extends Application {
 
     private void showLobby(Stage primaryStage, String username) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lobby.fxml"));
-        Scene scene = new Scene(loader.load());
+        Scene scene = new Scene(loader.load(), 800, 600);
 
         LobbyController lobbyController = loader.getController();
         GameClient gameClient = new GameClient(username);
