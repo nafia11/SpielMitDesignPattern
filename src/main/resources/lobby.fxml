@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -10,16 +9,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.LobbyController">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.lobby.LobbyController" stylesheets="@styles.css">
     <children>
         <VBox spacing="10" style="-fx-background-image: url('images/background.jpg'); -fx-background-size: cover;">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <HBox spacing="10" alignment="CENTER">
-                <TextField fx:id="usernameDisplay" editable="false" />
-                <Button text="Change Username" onAction="#changeUsername" />
-                <Button text="Disconnect" onAction="#disconnect" />
+                <TextField fx:id="usernameDisplay" editable="false" styleClass="username-display"/>
+                <Button text="Change Username" onAction="#changeUsername" styleClass="button"/>
+                <Button text="Disconnect" onAction="#disconnect" styleClass="button"/>
             </HBox>
             <Pane fx:id="playerFiguresPane" prefHeight="100" />
             <Pane VBox.vgrow="ALWAYS" />
@@ -28,7 +27,7 @@
                     <TextArea fx:id="chatArea" editable="false" prefHeight="200" prefWidth="400"/>
                     <HBox spacing="10">
                         <TextField fx:id="chatInput" prefHeight="30" HBox.hgrow="ALWAYS"/>
-                        <Button text="Send" onAction="#sendMessage" />
+                        <Button text="Send" onAction="#sendMessage" styleClass="button"/>
                     </HBox>
                 </VBox>
             </HBox>

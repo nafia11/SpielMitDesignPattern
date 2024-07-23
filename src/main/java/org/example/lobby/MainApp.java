@@ -66,8 +66,13 @@ public class MainApp extends Application {
 
         primaryStage.setTitle("Game Lobby");
         primaryStage.setScene(scene);
+
+        // Request focus for another element or the root
+        scene.getRoot().requestFocus();
+
         primaryStage.show();
     }
+
 
 
 
