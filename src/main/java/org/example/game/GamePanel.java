@@ -26,7 +26,7 @@ public class GamePanel extends Pane {
         this.getChildren().add(canvas);
 
         keyHandler = new KeyHandler();
-        player = new Player(this, keyHandler);
+        player = new Player(keyHandler);
 
         // Set up key event handlers
         canvas.setFocusTraversable(true);
