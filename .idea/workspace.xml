@@ -5,8 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/game/GamePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/game/KeyHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_down_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_down_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_left_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_left_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_right_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_right_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_up_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_up_2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/player_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/player_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lobby.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

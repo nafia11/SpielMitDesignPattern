@@ -9,15 +9,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.example.client.GameClient;
+import org.example.game.GamePanel;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public class MainApp extends Application {
     private static String username;
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        MainApp.primaryStage = primaryStage;
         showLoginDialog(primaryStage);
     }
 
@@ -73,8 +76,16 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
+    public static void showGameWindow() {
+        GamePanel gamePanel = new GamePanel();
+        Scene scene = new Scene(gamePanel, gamePanel.screenWidth, gamePanel.screenHeight);
 
+        Stage gameStage = new Stage();
+        gameStage.setTitle("Game");
+        gameStage.setScene(scene);
 
+        gameStage.show();
+    }
 
     public static void main(String[] args) {
         launch(args);

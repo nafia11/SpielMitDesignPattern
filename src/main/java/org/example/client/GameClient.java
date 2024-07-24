@@ -76,6 +76,8 @@ public class GameClient {
                 } else if (message.startsWith("USERNAME_TAKEN")) {
                     String suggestedUsername = message.substring(14);
                     Platform.runLater(() -> lobbyController.promptForNewUsername(suggestedUsername));
+                } else if (message.startsWith("START_GAME")) {
+                    Platform.runLater(MainApp::showGameWindow);
                 }
             }
         } catch (SocketException se) {
@@ -88,12 +90,12 @@ public class GameClient {
             shutdown();
         }
     }
+
     public void disconnect() {
         sendMessage("DISCONNECT"); // Optionally inform the server that the client is disconnecting
         shutdown();
         Platform.exit(); // Close the application after disconnecting
     }
-
 
     public void shutdown() {
         try {

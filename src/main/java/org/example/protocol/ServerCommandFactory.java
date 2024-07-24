@@ -16,6 +16,8 @@ public class ServerCommandFactory {
             return new UpdateUsernameCommand(message.substring(15), gameState, clientHandler, usernameManager);
         } else if (message.startsWith("DISCONNECT")) {
             return new DisconnectCommand(clientHandler, usernameManager);
+        } else if (message.startsWith("START_GAME")) {
+                return new StartGameCommand(gameState, clientHandler);
         } else {
             return new UnknownCommand();
         }
@@ -124,6 +126,23 @@ class DisconnectCommand implements ServerCommand {
 
         usernameManager.releaseUsername(username);
         clientHandler.cleanup();
+    }
+}
+
+class StartGameCommand implements ServerCommand {
+    private final GameState gameState;
+    private final ClientHandler clientHandler;
+
+    public StartGameCommand(GameState gameState, ClientHandler clientHandler) {
+        this.gameState = gameState;
+        this.clientHandler = clientHandler;
+    }
+
+    @Override
+    public void execute() {
+        for (ClientHandler handler : clientHandler.getConnectedClients()) {
+            handler.sendMessage("START_GAME");
+        }
     }
 }
 class UnknownCommand implements ServerCommand {

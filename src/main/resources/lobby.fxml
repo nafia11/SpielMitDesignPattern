@@ -8,7 +8,8 @@
             <!-- Username and Action Buttons -->
             <TextField fx:id="usernameDisplay" editable="false" styleClass="username-display" layoutX="20" layoutY="10"/>
             <Button text="Change Username" onAction="#changeUsername" styleClass="square-button" layoutX="500" layoutY="300"/>
-            <Button text="Disconnect" onAction="#disconnect" styleClass="square-button" layoutX="525" layoutY="355"/>
+            <Button text="Start Game" onAction="#startGame" styleClass="square-button" layoutX="525" layoutY="355"/>
+            <Button text="Disconnect" onAction="#disconnect" styleClass="square-button" layoutX="525" layoutY="410"/>
 
             <!-- Player Figures Pane -->
             <Pane fx:id="playerFiguresPane" prefHeight="100" layoutX="20" layoutY="100" prefWidth="600"/>

@@ -41,6 +41,12 @@ public class LobbyController {
     }
 
     @FXML
+    private void startGame() {
+        gameClient.sendMessage("START_GAME");
+    }
+
+
+    @FXML
     private void changeUsername() {
         TextInputDialog dialog = new TextInputDialog(gameClient.getUsername());
         dialog.setTitle("Change Username");

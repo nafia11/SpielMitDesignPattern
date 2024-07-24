@@ -17,4 +17,10 @@ public class GameState {
     public List<String> getPlayerList() {
         return new ArrayList<>(players);
     }
+
+//    public void startGame() {
+//        // Initialize game state
+//    }
+
+
 }
