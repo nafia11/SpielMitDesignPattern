@@ -32,10 +32,8 @@ public class GameClient {
 
             // Automatically send join request
             sendMessage("JOIN " + username);
-
             Thread receiveThread = new Thread(this::receiveMessages);
             receiveThread.start();
-
         } catch (IOException e) {
             logger.error("Failed to initialize client: ", e);
             shutdown();
@@ -69,17 +67,37 @@ public class GameClient {
                         System.out.println(chatMessage);
                     }
                 } else if (message.startsWith("UPDATE_PLAYERS")) {
-                    String[] players = message.substring(15).split(",");
-                    if (lobbyController != null) {
-                        lobbyController.updatePlayerList(players);
-                    }
+                        String[] players = message.substring(15).split(",");
+                        if (lobbyController != null) {
+                            lobbyController.updatePlayerList(players);
+                        }
                 } else if (message.startsWith("USERNAME_TAKEN")) {
                     String suggestedUsername = message.substring(14);
                     Platform.runLater(() -> lobbyController.promptForNewUsername(suggestedUsername));
                 } else if (message.startsWith("START_GAME")) {
+                    System.out.println("I am in client start");
                     Platform.runLater(MainApp::showGameWindow);
+                } else if (message.startsWith("FORCE_START_GAME")) {
+                    System.out.println("I am in client class force");
+                    Platform.runLater(() -> {
+                    lobbyController.ForceStartRequest();});
+                } else if (message.startsWith("READY")) {
+                    String username = message.substring(6).trim();
+                    if (lobbyController != null) {
+                        Platform.runLater(() -> {
+                            lobbyController.addMessageToChat(username + " is ready");
+                        });
+                    }
+                } else if (message.startsWith("READY_STATUS")) {
+                    String statusMessage = message.substring(13).trim();
+                    if (lobbyController != null) {
+                        Platform.runLater(() -> {
+                            lobbyController.addMessageToChat(statusMessage);
+                        });
+                    }
                 }
             }
+
         } catch (SocketException se) {
             logger.error("Connection to the server lost: ", se);
             shutdown();
@@ -111,10 +129,10 @@ public class GameClient {
         this.lobbyController = lobbyController;
     }
 
-    public void setUsername(String username) {
+    /*public void setUsername(String username) {
         this.username = username;
         sendMessage("UPDATE_USERNAME " + username);
-    }
+    }*/
 
     public String getUsername() {
         return username;

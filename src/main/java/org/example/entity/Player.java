@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.example.game.KeyHandler;
 
+import java.util.Objects;
+
 public class Player {
     private double x, y;
     private double speed;
@@ -22,14 +24,14 @@ public class Player {
         this.keyHandler = keyHandler;
 
         // Load images for animations
-        up1 = new Image(getClass().getResourceAsStream("/player/boy_up_1.png"));
-        up2 = new Image(getClass().getResourceAsStream("/player/boy_up_2.png"));
-        down1 = new Image(getClass().getResourceAsStream("/player/boy_down_1.png"));
-        down2 = new Image(getClass().getResourceAsStream("/player/boy_down_2.png"));
-        left1 = new Image(getClass().getResourceAsStream("/player/boy_left_1.png"));
-        left2 = new Image(getClass().getResourceAsStream("/player/boy_left_2.png"));
-        right1 = new Image(getClass().getResourceAsStream("/player/boy_right_1.png"));
-        right2 = new Image(getClass().getResourceAsStream("/player/boy_right_2.png"));
+        up1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
+        up2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
+        down1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
+        down2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
+        left1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
+        left2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
+        right1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
+        right2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
     }
 
     public void update() {

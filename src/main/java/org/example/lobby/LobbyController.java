@@ -2,9 +2,7 @@ package org.example.lobby;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -15,6 +13,7 @@ import org.example.client.GameClient;
 import java.util.Optional;
 
 public class LobbyController {
+
     @FXML
     private TextArea chatArea;
     @FXML
@@ -26,55 +25,10 @@ public class LobbyController {
 
     private GameClient gameClient;
 
+
     public void setGameClient(GameClient gameClient) {
         this.gameClient = gameClient;
         this.usernameDisplay.setText(gameClient.getUsername());
-    }
-
-    @FXML
-    private void sendMessage() {
-        String message = chatInput.getText();
-        if (message != null && !message.trim().isEmpty()) {
-            gameClient.sendMessage("CHAT " + message);
-            chatInput.clear();
-        }
-    }
-
-    @FXML
-    private void startGame() {
-        gameClient.sendMessage("START_GAME");
-    }
-
-
-    @FXML
-    private void changeUsername() {
-        TextInputDialog dialog = new TextInputDialog(gameClient.getUsername());
-        dialog.setTitle("Change Username");
-        dialog.setHeaderText("Enter a new username:");
-        dialog.setContentText("New Username:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(newUsername -> {
-            String trimmedNewUsername = newUsername.trim();
-            gameClient.sendMessage("UPDATE_USERNAME " + trimmedNewUsername);
-            updateUsernameDisplay(trimmedNewUsername);
-        });
-    }
-
-    @FXML
-    private void disconnect() {
-        if (gameClient != null) {
-            Stage stage = (Stage) chatArea.getScene().getWindow();
-            stage.close(); // Close the GUI window
-
-            new Thread(() -> {
-                gameClient.disconnect();
-            }).start();
-        }
-    }
-
-    public void addMessageToChat(String message) {
-        Platform.runLater(() -> chatArea.appendText(message + "\n"));
     }
 
     public void updatePlayerList(String[] players) {
@@ -102,6 +56,53 @@ public class LobbyController {
         }
     }
 
+    @FXML
+    private void sendMessage() {
+        String message = chatInput.getText();
+        if (message != null && !message.trim().isEmpty()) {
+            gameClient.sendMessage("CHAT " + message);
+            chatInput.clear();
+        }
+    }
+
+    @FXML
+    private void startGame() {
+        gameClient.sendMessage("START_GAME");
+        System.out.println("I am in lobby controller startgame");
+    }
+
+
+    @FXML
+    private void changeUsername() {
+        TextInputDialog dialog = new TextInputDialog(gameClient.getUsername());
+        dialog.setTitle("Change Username");
+        dialog.setHeaderText("Enter a new username:");
+        dialog.setContentText("New Username:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newUsername -> {
+            String trimmedNewUsername = newUsername.trim();
+            gameClient.sendMessage("UPDATE_USERNAME " + trimmedNewUsername);
+            updateUsernameDisplay(trimmedNewUsername);
+        });
+    }
+
+    @FXML
+    private void disconnect() {
+        if (gameClient != null) {
+            Stage stage = (Stage) chatArea.getScene().getWindow();
+            stage.close();
+
+            new Thread(() -> {
+                gameClient.disconnect();
+            }).start();
+        }
+    }
+
+    public void addMessageToChat(String message) {
+        Platform.runLater(() -> chatArea.appendText(message + "\n"));
+    }
+
     public void promptForNewUsername(String suggestedUsername) {
         Platform.runLater(() -> {
             TextInputDialog dialog = new TextInputDialog(suggestedUsername);
@@ -120,5 +121,28 @@ public class LobbyController {
 
     private void updateUsernameDisplay(String newUsername) {
         Platform.runLater(() -> usernameDisplay.setText(newUsername));
+    }
+
+    public void ready() {
+        String username = gameClient.getUsername();
+        gameClient.sendMessage("READY " + username);
+    }
+
+    public void ForceStartRequest() {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Start Game");
+            alert.setHeaderText("Not all players are ready");
+            alert.setContentText("Do you want to start the game without waiting for all players to be ready?");
+
+            ButtonType yesButton = new ButtonType("Yes");
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(yesButton, noButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == yesButton) {
+                Platform.runLater(MainApp::showGameWindow);
+            }
+
     }
 }

@@ -4,6 +4,8 @@ import org.example.game.GameState;
 import org.example.server.ClientHandler;
 import org.example.server.UsernameManager;
 
+import java.util.List;
+
 public class ServerCommandFactory {
     private static final UsernameManager usernameManager = new UsernameManager();
 
@@ -18,11 +20,74 @@ public class ServerCommandFactory {
             return new DisconnectCommand(clientHandler, usernameManager);
         } else if (message.startsWith("START_GAME")) {
                 return new StartGameCommand(gameState, clientHandler);
+        } else if (message.startsWith("READY")) {
+            return new ReadyCommand(gameState, clientHandler);
         } else {
+
             return new UnknownCommand();
         }
     }
 }
+
+class ReadyCommand implements ServerCommand {
+    private final GameState gameState;
+    private final ClientHandler clientHandler;
+
+    public ReadyCommand(GameState gameState, ClientHandler clientHandler) {
+        this.gameState = gameState;
+        this.clientHandler = clientHandler;
+    }
+
+    @Override
+    public void execute() {
+        String username = clientHandler.getUsername();
+        gameState.setPlayerReady(username, true); // Mark player as ready
+
+        // Notify all clients about the updated readiness status
+        /*for (ClientHandler handler : clientHandler.getConnectedClients()) {
+            handler.sendMessage("READY " + username);
+            handler.sendMessage("READY_STATUS " + getReadyStatusMessage());
+        }*/
+    }
+
+    private String getReadyStatusMessage() {
+        return "Ready: " + String.join(", ", gameState.getReadyPlayers()) +
+                " |Not Ready: " +
+                String.join(", ", gameState.getNotReadyPlayers());
+    }
+}
+
+class StartGameCommand implements ServerCommand {
+    private final GameState gameState;
+    private final ClientHandler clientHandler;
+
+    public StartGameCommand(GameState gameState, ClientHandler clientHandler) {
+        this.gameState = gameState;
+        this.clientHandler = clientHandler;
+    }
+
+    @Override
+    public void execute() {
+        List<String> allPlayers = gameState.getPlayerList();
+        List<String> readyPlayers = gameState.getReadyPlayers();
+
+        if (allPlayers.size() == readyPlayers.size()) {
+            for (ClientHandler handler : clientHandler.getConnectedClients()) {
+
+                handler.sendMessage("START_GAME");
+                System.out.println("I am in command factory normal start");
+            }
+        } else {
+
+            for (ClientHandler handler : clientHandler.getConnectedClients()) {
+                handler.sendMessage("FORCE_START_GAME");
+                System.out.println("I am in command factory force start");
+            }
+
+        }
+    }
+}
+
 
 
 class ChatCommand implements ServerCommand {
@@ -68,6 +133,7 @@ class JoinCommand implements ServerCommand {
                 handler.sendMessage("CHAT User " + assignedUsername + " has joined.");
                 handler.sendMessage("UPDATE_PLAYERS " + String.join(",", gameState.getPlayerList()));
             }
+
         }
     }
 }
@@ -129,22 +195,7 @@ class DisconnectCommand implements ServerCommand {
     }
 }
 
-class StartGameCommand implements ServerCommand {
-    private final GameState gameState;
-    private final ClientHandler clientHandler;
 
-    public StartGameCommand(GameState gameState, ClientHandler clientHandler) {
-        this.gameState = gameState;
-        this.clientHandler = clientHandler;
-    }
-
-    @Override
-    public void execute() {
-        for (ClientHandler handler : clientHandler.getConnectedClients()) {
-            handler.sendMessage("START_GAME");
-        }
-    }
-}
 class UnknownCommand implements ServerCommand {
     @Override
     public void execute() {
