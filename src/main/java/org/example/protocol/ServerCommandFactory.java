@@ -42,7 +42,8 @@ class ReadyCommand implements ServerCommand {
     public void execute() {
         String username = clientHandler.getUsername();
         gameState.setPlayerReady(username, true); // Mark player as ready
-
+        clientHandler.sendMessage("READY " + username);
+        System.out.println("factory ready");
         // Notify all clients about the updated readiness status
         /*for (ClientHandler handler : clientHandler.getConnectedClients()) {
             handler.sendMessage("READY " + username);

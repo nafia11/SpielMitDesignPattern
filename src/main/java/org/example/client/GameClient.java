@@ -82,10 +82,11 @@ public class GameClient {
                     Platform.runLater(() -> {
                     lobbyController.ForceStartRequest();});
                 } else if (message.startsWith("READY")) {
+                    System.out.println("in client ready");
                     String username = message.substring(6).trim();
                     if (lobbyController != null) {
                         Platform.runLater(() -> {
-                            lobbyController.addMessageToChat(username + " is ready");
+                            lobbyController.addMessageToChat( username + " is ready");
                         });
                     }
                 } else if (message.startsWith("READY_STATUS")) {

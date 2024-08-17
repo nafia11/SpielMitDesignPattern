@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lobby.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +78,7 @@
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameClient">
+  <component name="RunManager">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.client.Client" />
       <module name="SpielMitDesignPattern.main" />
