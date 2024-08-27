@@ -59,46 +59,10 @@ public class GameClient {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                if (message.startsWith("CHAT")) {
-                    String chatMessage = message.substring(5);
-                    if (lobbyController != null) {
-                        lobbyController.addMessageToChat(chatMessage);
-                    } else {
-                        System.out.println(chatMessage);
-                    }
-                } else if (message.startsWith("UPDATE_PLAYERS")) {
-                        String[] players = message.substring(15).split(",");
-                        if (lobbyController != null) {
-                            lobbyController.updatePlayerList(players);
-                        }
-                } else if (message.startsWith("USERNAME_TAKEN")) {
-                    String suggestedUsername = message.substring(14);
-                    Platform.runLater(() -> lobbyController.promptForNewUsername(suggestedUsername));
-                } else if (message.startsWith("START_GAME")) {
-                    System.out.println("I am in client start");
-                    Platform.runLater(MainApp::showGameWindow);
-                } else if (message.startsWith("FORCE_START_GAME")) {
-                    System.out.println("I am in client class force");
-                    Platform.runLater(() -> {
-                    lobbyController.ForceStartRequest();});
-                } else if (message.startsWith("READY")) {
-                    System.out.println("in client ready");
-                    String username = message.substring(6).trim();
-                    if (lobbyController != null) {
-                        Platform.runLater(() -> {
-                            lobbyController.addMessageToChat( username + " is ready");
-                        });
-                    }
-                } else if (message.startsWith("READY_STATUS")) {
-                    String statusMessage = message.substring(13).trim();
-                    if (lobbyController != null) {
-                        Platform.runLater(() -> {
-                            lobbyController.addMessageToChat(statusMessage);
-                        });
-                    }
-                }
-            }
 
+                String finalMessage = message;
+                Platform.runLater(() -> handleServerMessage(finalMessage));
+            }
         } catch (SocketException se) {
             logger.error("Connection to the server lost: ", se);
             shutdown();
@@ -107,6 +71,48 @@ public class GameClient {
             shutdown();
         } finally {
             shutdown();
+        }
+    }
+
+    private void handleServerMessage(String message) {
+        if (message.startsWith("CHAT")) {
+            String chatMessage = message.substring(5);
+            if (lobbyController != null) {
+                lobbyController.addMessageToChat(chatMessage);
+            } else {
+                System.out.println(chatMessage);
+            }
+        } else if (message.startsWith("UPDATE_PLAYERS")) {
+            String[] players = message.substring(15).split(",");
+            if (lobbyController != null) {
+                lobbyController.updatePlayerList(players);
+            }
+        } else if (message.startsWith("USERNAME_TAKEN")) {
+            String suggestedUsername = message.substring(14);
+            username= suggestedUsername;
+            if (lobbyController != null) {
+                lobbyController.promptForNewUsername(suggestedUsername);
+            }
+        } else if (message.startsWith("START_GAME")) {
+            MainApp.showGameWindow();
+        } else if (message.startsWith("FORCE_START_GAME")) {
+            if (lobbyController != null) {
+                lobbyController.ForceStartRequest();
+            }
+        } else if (message.startsWith("USERNAME_UPDATED")) {
+            String updatedUsername = message.substring(17).trim();
+            username = updatedUsername;
+        }
+        else if (message.startsWith("READY")) {
+            String username = message.substring(6).trim();
+            if (lobbyController != null) {
+                lobbyController.addMessageToChat(username + " is ready");
+            }
+        } else if (message.startsWith("READY_STATUS")) {
+            String statusMessage = message.substring(13).trim();
+            if (lobbyController != null) {
+                lobbyController.addMessageToChat(statusMessage);
+            }
         }
     }
 
@@ -130,16 +136,12 @@ public class GameClient {
         this.lobbyController = lobbyController;
     }
 
-    /*public void setUsername(String username) {
-        this.username = username;
-        sendMessage("UPDATE_USERNAME " + username);
-    }*/
-
     public String getUsername() {
         return username;
     }
 
     public static void main(String[] args) {
         Application.launch(MainApp.class, args);
+        System.out.println(username);
     }
 }
