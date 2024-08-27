@@ -37,9 +37,13 @@ public class UpdateUsernameCommand implements ServerCommand {
         } else {
             usernameManager.releaseUsername(currentUsername);
             usernameManager.reserveUsername(newUsername);
-            gameState.removePlayer(currentUsername);
-            gameState.addPlayer(newUsername);
+            gameState.updatePlayerUsername(currentUsername, newUsername);
+            //Player player = gameState.getPlayer(clientHandler);
+            //gameState.removePlayer(currentUsername); // Remove the player with the current username
+            //System.out.println("we adding player with new username");
             clientHandler.setUsername(newUsername);
+            //gameState.addPlayer(newUsername, clientHandler, player); // Add the player with the new username
+
             for (ClientHandler handler : clientHandler.getConnectedClients()) {
                 handler.sendMessage("CHAT User " + currentUsername + " has changed their username to " + newUsername);
                 handler.sendMessage("UPDATE_PLAYERS " + String.join(",", gameState.getPlayerList()));

@@ -2,6 +2,8 @@ package org.example.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.entity.Player;
+import org.example.game.KeyHandler;
 import org.example.protocol.ServerCommandFactory;
 
 import java.io.*;
@@ -16,16 +18,18 @@ public class ClientHandler implements Runnable {
     private final List<ClientHandler> connectedClients;
     private final GameState gameState;
     private String username;
+    private KeyHandler keyHandler;
 
-    public ClientHandler(Socket socket, List<ClientHandler> connectedClients, GameState gameState) throws IOException {
+    public ClientHandler(Socket socket, List<ClientHandler> connectedClients, GameState gameState, KeyHandler keyHandler) throws IOException {
         this.socket = socket;
         this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         this.connectedClients = connectedClients;
         this.gameState = gameState;
+        this.keyHandler = keyHandler;
         this.username = "default";
         sendMessage("USERNAME_UPDATED " + this.username);
-        System.out.println("ups");
+        gameState.addPlayer(username, this, new Player(username, keyHandler));
     }
 
     @Override
@@ -33,10 +37,11 @@ public class ClientHandler implements Runnable {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                ServerCommandFactory.createCommand(message, gameState, this).execute();
+                ServerCommandFactory.createCommand(message, gameState, this, keyHandler).execute();
             }
         } catch (IOException e) {
-            logger.error("Error in client communication: ", e);
+            //logger.error("Error in client communication: ", e);
+            logger.error("Bye Bye. Socket closed");
         } finally {
             cleanup();
         }
@@ -85,6 +90,10 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             logger.error("Error closing connection: ", e);
         }
+    }
+    @Override
+    public String toString() {
+        return username;
     }
 
 }

@@ -17,7 +17,7 @@ public class GamePanel extends Pane {
     public final int screenHeight = tileSize * maxScreenRow;
 
     private GraphicsContext gc;
-    private Player player;
+    private Player player1, player2;
     private KeyHandler keyHandler;
 
     public GamePanel() {
@@ -27,7 +27,8 @@ public class GamePanel extends Pane {
         this.getChildren().add(canvas);
 
         keyHandler = new KeyHandler();
-        player = new Player(keyHandler);
+        player1 = new Player("ww", keyHandler);
+        player2 = new Player("22", keyHandler);
 
         // Set up key event handlers
         canvas.setFocusTraversable(true);
@@ -39,6 +40,9 @@ public class GamePanel extends Pane {
 
         // Start the game loop
         startGameLoop();
+
+        // Test positions
+        testPlayerPositions();
     }
 
     private void startGameLoop() {
@@ -52,11 +56,24 @@ public class GamePanel extends Pane {
     }
 
     private void update() {
-        player.update();
+        player1.update();
+        player2.update();
     }
 
     private void render() {
         gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the canvas
-        player.draw(gc);
+        player1.draw(gc);
+        player2.draw(gc);
     }
+
+    private void testPlayerPositions() {
+        // Set player positions for testing
+        player1.setPosition(50, 50);
+        player2.setPosition(100, 100);
+
+        // Optionally set swinging behavior, I will add it later
+        /*player1.setSwingPosition(200, 200);
+        player2.setSwingPosition(300, 300);*/
+    }
+
 }
