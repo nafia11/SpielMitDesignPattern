@@ -1,6 +1,7 @@
 package org.example.lobby;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
@@ -77,14 +78,14 @@ public class MainApp extends Application {
     }
 
     public static void showGameWindow() {
-        GamePanel gamePanel = new GamePanel();
-        Scene scene = new Scene(gamePanel, gamePanel.screenWidth, gamePanel.screenHeight);
-
-        Stage gameStage = new Stage();
-        gameStage.setTitle("Game");
-        gameStage.setScene(scene);
-
-        gameStage.show();
+        Platform.runLater(() -> {
+            GamePanel gamePanel = new GamePanel();
+            Scene scene = new Scene(gamePanel, gamePanel.screenWidth, gamePanel.screenHeight);
+            Stage gameStage = new Stage();
+            gameStage.setTitle("Game");
+            gameStage.setScene(scene);
+            gameStage.show();
+        });
     }
 
     public static void main(String[] args) {

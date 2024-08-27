@@ -24,6 +24,8 @@ public class ClientHandler implements Runnable {
         this.connectedClients = connectedClients;
         this.gameState = gameState;
         this.username = "default";
+        sendMessage("USERNAME_UPDATED " + this.username);
+        System.out.println("ups");
     }
 
     @Override
@@ -58,16 +60,18 @@ public class ClientHandler implements Runnable {
         return username != null ? username.trim() : null;
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
 
     public void setUsername(String username) {
         if (username == null || username.trim().isEmpty()) {
-            // Optionally, log or handle the case where the username is invalid
-            logger.warn("Attempted to set an invalid username: '" + username + "'");
-        } else {
-            this.username = username.trim();
+            username = "default"; // Assign default username
         }
-        logger.info("Username set to: " + this.username);
+        this.username = username.trim();
+        sendMessage("USERNAME_UPDATED " + this.username); // Notify client
     }
+
 
 
     public void cleanup() {

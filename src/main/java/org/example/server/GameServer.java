@@ -41,6 +41,14 @@ public class GameServer {
         }
     }
 
+    public void stop() {
+        for (ClientHandler client : connectedClients) {
+            client.cleanup();
+        }
+        connectedClients.clear();
+        logger.info("Server stopped.");
+    }
+
     public static void main(String[] args) {
         GameServer.getInstance().start();
     }
