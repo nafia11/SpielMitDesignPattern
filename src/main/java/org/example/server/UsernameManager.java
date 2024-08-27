@@ -6,11 +6,11 @@ public class UsernameManager {
     private final HashMap<String, Boolean> usernameAvailability = new HashMap<>();
 
     public boolean isUsernameAvailable(String username) {
-        return !usernameAvailability.getOrDefault(username.trim(), false);
+        return !usernameAvailability.getOrDefault(username.trim().toLowerCase(), false);
     }
 
     public String getAvailableUsername(String desiredUsername) {
-        String username = desiredUsername.trim();
+        String username = desiredUsername.trim().toLowerCase();
         if (isUsernameAvailable(username)) {
             return username;
         } else {
@@ -26,11 +26,10 @@ public class UsernameManager {
     }
 
     public void reserveUsername(String username) {
-        usernameAvailability.put(username.trim(), true);
+        usernameAvailability.put(username.trim().toLowerCase(), true);
     }
 
-
     public void releaseUsername(String username) {
-        usernameAvailability.put(username.trim(), false);
+        usernameAvailability.put(username.trim().toLowerCase(), false);
     }
 }

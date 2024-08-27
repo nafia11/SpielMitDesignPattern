@@ -2,7 +2,6 @@ package org.example.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.game.GameState;
 import org.example.protocol.ServerCommandFactory;
 
 import java.io.*;
@@ -24,6 +23,7 @@ public class ClientHandler implements Runnable {
         this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         this.connectedClients = connectedClients;
         this.gameState = gameState;
+        this.username = "default";
     }
 
     @Override
@@ -55,12 +55,20 @@ public class ClientHandler implements Runnable {
     }
 
     public String getUsername() {
-        return username.trim(); // Trim any extra spaces
+        return username != null ? username.trim() : null;
     }
 
+
     public void setUsername(String username) {
-        this.username = username.trim(); // Trim any extra spaces
+        if (username == null || username.trim().isEmpty()) {
+            // Optionally, log or handle the case where the username is invalid
+            logger.warn("Attempted to set an invalid username: '" + username + "'");
+        } else {
+            this.username = username.trim();
+        }
+        logger.info("Username set to: " + this.username);
     }
+
 
     public void cleanup() {
         try {

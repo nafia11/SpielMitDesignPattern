@@ -1,10 +1,11 @@
-package org.example.game;
+package org.example.client;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import org.example.entity.Player;
+import org.example.game.KeyHandler;
 
 public class GamePanel extends Pane {
     final int originalTileSize = 16;

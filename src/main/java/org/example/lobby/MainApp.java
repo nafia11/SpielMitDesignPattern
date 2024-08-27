@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.example.client.GameClient;
-import org.example.game.GamePanel;
+import org.example.client.GamePanel;
 
 import java.io.IOException;
 import java.util.Optional;

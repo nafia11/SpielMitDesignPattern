@@ -82,10 +82,21 @@ public class LobbyController {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(newUsername -> {
             String trimmedNewUsername = newUsername.trim();
-            gameClient.sendMessage("UPDATE_USERNAME " + trimmedNewUsername);
-            updateUsernameDisplay(trimmedNewUsername);
+
+            if (trimmedNewUsername.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Invalid Username");
+                alert.setHeaderText("Username cannot be empty or just spaces.");
+                alert.setContentText("Please enter a valid username.");
+                alert.showAndWait();
+            } else {
+                gameClient.sendMessage("UPDATE_USERNAME " + trimmedNewUsername);
+                updateUsernameDisplay(trimmedNewUsername);
+            }
         });
     }
+
+
 
     @FXML
     private void disconnect() {
@@ -119,9 +130,16 @@ public class LobbyController {
         });
     }
 
+
     private void updateUsernameDisplay(String newUsername) {
-        Platform.runLater(() -> usernameDisplay.setText(newUsername));
+        Platform.runLater(() -> {
+            // Check if newUsername is null or empty; if so, fallback to "Guest" without a leading space
+            String displayName = (newUsername == null || newUsername.trim().isEmpty()) ? "Guest" : newUsername.trim();
+            usernameDisplay.setText(displayName);
+        });
     }
+
+
 
     public void ready() {
         String username = gameClient.getUsername();

@@ -1,6 +1,6 @@
 package org.example.protocol;
 
-import org.example.game.GameState;
+import org.example.server.GameState;
 import org.example.server.ClientHandler;
 import org.example.server.UsernameManager;
 
@@ -109,13 +109,16 @@ class ChatCommand implements ServerCommand {
 }
 
 class JoinCommand implements ServerCommand {
+    private static int defaultUsernameCounter = 1; // Counter for default usernames
+
     private final String username;
     private final GameState gameState;
     private final ClientHandler clientHandler;
     private final UsernameManager usernameManager;
 
     public JoinCommand(String username, GameState gameState, ClientHandler clientHandler, UsernameManager usernameManager) {
-        this.username = username.trim();
+        // Validate and trim the username
+        this.username = (username == null || username.trim().isEmpty()) ? generateDefaultUsername() : username.trim();
         this.gameState = gameState;
         this.clientHandler = clientHandler;
         this.usernameManager = usernameManager;
@@ -134,10 +137,15 @@ class JoinCommand implements ServerCommand {
                 handler.sendMessage("CHAT User " + assignedUsername + " has joined.");
                 handler.sendMessage("UPDATE_PLAYERS " + String.join(",", gameState.getPlayerList()));
             }
-
         }
     }
+
+    // Generates a simple default username with an incrementing counter
+    private String generateDefaultUsername() {
+        return "Guest" + defaultUsernameCounter++;
+    }
 }
+
 
 
 class UpdateUsernameCommand implements ServerCommand {
@@ -155,22 +163,34 @@ class UpdateUsernameCommand implements ServerCommand {
 
     @Override
     public void execute() {
-        String currentUsername = clientHandler.getUsername().trim(); // Trim any extra spaces
+        if (newUsername == null || newUsername.trim().isEmpty()) {
+            clientHandler.sendMessage("ERROR: Username cannot be empty or just spaces.");
+            return;
+        }
+
+        String currentUsername = clientHandler.getUsername();
+        if (currentUsername == null) {
+            clientHandler.sendMessage("ERROR: Username not set.");
+            return;
+        }
+        currentUsername = currentUsername.trim();
+
         String assignedUsername = usernameManager.getAvailableUsername(newUsername);
         if (!assignedUsername.equals(newUsername)) {
             clientHandler.sendMessage("USERNAME_TAKEN " + assignedUsername);
         } else {
-            usernameManager.releaseUsername(currentUsername); // Release the old username
-            usernameManager.reserveUsername(newUsername); // Reserve the new username
+            usernameManager.releaseUsername(currentUsername);
+            usernameManager.reserveUsername(newUsername);
             gameState.removePlayer(currentUsername);
             gameState.addPlayer(newUsername);
             clientHandler.setUsername(newUsername);
             for (ClientHandler handler : clientHandler.getConnectedClients()) {
-                handler.sendMessage("CHAT User " + currentUsername + " has changed their username to " + newUsername); // Ensure message has no extra spaces
+                handler.sendMessage("CHAT User " + currentUsername + " has changed their username to " + newUsername);
                 handler.sendMessage("UPDATE_PLAYERS " + String.join(",", gameState.getPlayerList()));
             }
         }
     }
+
 }
 
 
