@@ -13,6 +13,7 @@ import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class GameClient {
     private static final Logger logger = LogManager.getLogger(GameClient.class);
     private Socket socket;
@@ -20,9 +21,11 @@ public class GameClient {
     private BufferedWriter writer;
     private static String username;
     private LobbyController lobbyController;
+    private static GameClient instance;
 
     public GameClient(String username) {
         GameClient.username = username.trim();
+        instance = this;
         connectToServer();
     }
 
@@ -162,6 +165,10 @@ public class GameClient {
                 lobbyController.addMessageToChat(statusMessage);
             }
         }
+    }
+
+    public static GameClient getInstance() {
+        return instance;
     }
 
 

@@ -23,10 +23,14 @@ public class ServerCommandFactory {
             return new StartGameCommand(gameState, clientHandler);
         } else if (message.startsWith("READY")) {
             return new ReadyCommand(gameState, clientHandler);
-        } else {
+        } else if (message.startsWith("POSITION_UPDATE")) {
+            return new PositionUpdateCommand(message.substring(16), gameState, clientHandler);
+        }
+        else {
             return new UnknownCommand();
         }
     }
 }
+
 
 

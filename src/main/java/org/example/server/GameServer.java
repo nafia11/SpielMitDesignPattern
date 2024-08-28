@@ -51,6 +51,15 @@ public class GameServer {
         logger.info("Server stopped.");
     }
 
+    public void broadcastPositionUpdate(String username, double x, double y) {
+        String message = "POSITION_UPDATE " + username + "," + x + "," + y;
+        for (ClientHandler client : connectedClients) {
+            client.sendMessage(message);
+        }
+    }
+
+
+
     public static void main(String[] args) {
         GameServer.getInstance().start();
     }

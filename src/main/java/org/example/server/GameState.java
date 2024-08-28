@@ -81,5 +81,14 @@ public class GameState {
             System.out.println("Updated username from " + oldUsername + " to " + newUsername);
         }
     }
+    public void updatePlayerPosition(String username, double x, double y) {
+        Player player = playerMap.get(username);
+        if (player != null) {
+            player.setX(x);
+            player.setY(y);
+        }
+    }
+
+
 }
 

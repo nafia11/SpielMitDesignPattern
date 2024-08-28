@@ -103,5 +103,10 @@ public class ClientHandler implements Runnable {
             System.out.println("Sending updated position from Server side..." + player.getX() + "," + player.getY());
         }
     }
+    public void notifyPositionUpdate(String username, double x, double y) {
+        GameServer.getInstance().broadcastPositionUpdate(username, x, y);
+    }
+
+
 
 }

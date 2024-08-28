@@ -2,6 +2,7 @@ package org.example.entity;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import org.example.client.GameClient;
 import org.example.game.KeyHandler;
 
 import java.util.Objects;
@@ -100,7 +101,6 @@ public class Player {
                 }
                 // Notify the server of the new position
                 sendPositionUpdate(this.username, this.x, this.y);
-                System.out.println("from player sending update");
             } else {
                 // Set to idle sprite when not moving
                 spriteNum = 1;
@@ -115,7 +115,7 @@ public class Player {
     // Send position update to the server
     private void sendPositionUpdate(String username, double x, double y) {
         String message = "POSITION_UPDATE " + username + "," + x + "," + y;
-        System.out.println("Sending position update: " + message);
+        GameClient.getInstance().sendMessage(message);
         // Replace with actual sending mechanism
     }
 
