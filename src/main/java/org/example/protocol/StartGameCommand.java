@@ -1,9 +1,11 @@
 package org.example.protocol;
 
+import org.example.entity.Player;
 import org.example.server.ClientHandler;
 import org.example.server.GameState;
 
 import java.util.List;
+import java.util.Map;
 
 public class StartGameCommand implements ServerCommand {
     private final GameState gameState;
@@ -16,17 +18,27 @@ public class StartGameCommand implements ServerCommand {
 
     @Override
     public void execute() {
-        List<String> allPlayers = gameState.getPlayerList();
         List<String> readyPlayers = gameState.getReadyPlayers();
+        Map<ClientHandler, Player> playerMap = gameState.getPlayerMap();
+        int initialX = 100, initialY = 100;
+        boolean allReady = (playerMap.size() == readyPlayers.size());
 
-        if (allPlayers.size() == readyPlayers.size()) {
-            for (ClientHandler handler : clientHandler.getConnectedClients()) {
+        System.out.println("Ready player size: " + readyPlayers.size() + " and all players: " + playerMap.size());
 
+        if (allReady) {
+            System.out.println("All players are ready.");
+            for (ClientHandler handler : playerMap.keySet()) {
                 handler.sendMessage("START_GAME");
-                System.out.println("I am in command factory normal start");
+                if (readyPlayers.contains(handler.getUsername())) {
+                    Player player = gameState.getPlayer(handler);
+                    player.setPosition(initialX, initialY);
+                    System.out.println("Setting player " + handler.getUsername() + "'s position: " + initialX + "," + initialY);
+                    initialX += 50;
+                }
+                System.out.println("Notifying clients about starting positions.");
+                handler.sendPlayerInitialPositions();
             }
         } else {
-
             for (ClientHandler handler : clientHandler.getConnectedClients()) {
                 handler.sendMessage("FORCE_START_GAME");
                 System.out.println("I am in command factory force start");

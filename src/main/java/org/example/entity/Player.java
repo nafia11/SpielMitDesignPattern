@@ -127,7 +127,7 @@ public class Player {
 
         if (image != null) {
             gc.drawImage(image, x, y, 48, 48);
-            System.out.println("Drawing player: " + username + " at position (" + x + ", " + y + ") using image: " + image.getUrl());
+            System.out.println("Drawing player: " + username + " at position (" + x + ", " + y + ")");
         } else {
             System.out.println("Image is null for direction: " + direction);
         }

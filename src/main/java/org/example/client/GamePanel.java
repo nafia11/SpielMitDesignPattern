@@ -18,7 +18,8 @@ public class GamePanel extends Pane {
 
     private GraphicsContext gc;
     private Player player1, player2;
-    private KeyHandler keyHandler;
+    private KeyHandler keyHandler1;
+    private KeyHandler keyHandler2;
 
     public GamePanel() {
         this.setPrefSize(screenWidth, screenHeight);
@@ -26,14 +27,14 @@ public class GamePanel extends Pane {
         gc = canvas.getGraphicsContext2D();
         this.getChildren().add(canvas);
 
-        keyHandler = new KeyHandler();
-        player1 = new Player("ww", keyHandler);
-        player2 = new Player("22", keyHandler);
+        keyHandler1 = new KeyHandler();
+        player1 = new Player("ww", keyHandler1);
+        player2 = new Player("22", keyHandler2);
 
         // Set up key event handlers
         canvas.setFocusTraversable(true);
-        canvas.setOnKeyPressed(event -> keyHandler.handleKeyPress(event));
-        canvas.setOnKeyReleased(event -> keyHandler.handleKeyRelease(event));
+        canvas.setOnKeyPressed(event -> keyHandler1.handleKeyPress(event));
+        canvas.setOnKeyReleased(event -> keyHandler1.handleKeyRelease(event));
 
         // Request focus on the canvas to capture key events
         canvas.requestFocus();
