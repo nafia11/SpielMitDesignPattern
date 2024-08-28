@@ -71,10 +71,10 @@ public class ClientHandler implements Runnable {
 
     public void setUsername(String username) {
         if (username == null || username.trim().isEmpty()) {
-            username = "default"; // Assign default username
+            username = "default";
         }
         this.username = username.trim();
-        sendMessage("USERNAME_UPDATED " + this.username); // Notify client
+        sendMessage("USERNAME_UPDATED " + this.username);
     }
 
 
@@ -99,12 +99,13 @@ public class ClientHandler implements Runnable {
     public void sendPlayerInitialPositions() {
         for (Player player : gameState.getAllPlayers()) {
             sendMessage("INITIAL_POSITION " + player.getUsername() + "," + player.getX() + "," + player.getY());
-            System.out.println("INITIAL_POSITION " + player.getUsername() + "," + player.getX() + "," + player.getY());
-            System.out.println("Sending updated position from Server side..." + player.getX() + "," + player.getY());
+            //System.out.println("INITIAL_POSITION " + player.getUsername() + "," + player.getX() + "," + player.getY());
+            //System.out.println("Sending updated position from Server side..." + player.getX() + "," + player.getY());
         }
     }
-    public void notifyPositionUpdate(String username, double x, double y) {
-        GameServer.getInstance().broadcastPositionUpdate(username, x, y);
+
+    public void notifyPositionUpdate(String username, double x, double y, String direction, int spriteNum) {
+        GameServer.getInstance().broadcastPositionUpdate(username, x, y, direction, spriteNum);
     }
 
 

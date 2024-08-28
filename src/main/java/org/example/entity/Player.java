@@ -67,6 +67,14 @@ public class Player {
         this.y = y;
     }
 
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public void setSpriteNum(int spriteNum) {
+        this.spriteNum = spriteNum;
+    }
+
     // Update player position based on key input
     public void update() {
         boolean isMoving = false;
@@ -75,12 +83,10 @@ public class Player {
             if (keyHandler.upPressed) {
                 direction = "up";
                 y -= speed;
-                System.out.println("Keyup is being pressed");
                 isMoving = true;
             } else if (keyHandler.downPressed) {
                 direction = "down";
                 y += speed;
-                System.out.println("Keydown is being pressed");
                 isMoving = true;
             } else if (keyHandler.leftPressed) {
                 direction = "left";
@@ -114,10 +120,12 @@ public class Player {
 
     // Send position update to the server
     private void sendPositionUpdate(String username, double x, double y) {
-        String message = "POSITION_UPDATE " + username + "," + x + "," + y;
+        //String message = String.format("POSITION_UPDATE %s,%f,%f,%s,%d", username, x, y, direction, spriteNum);
+        String message = "POSITION_UPDATE " + username + "," + x + "," + y + ","+direction +","+ spriteNum;
+        System.out.println(message);
         GameClient.getInstance().sendMessage(message);
-        // Replace with actual sending mechanism
     }
+
 
     // Draw the player on the canvas
     public void draw(GraphicsContext gc) {
@@ -136,4 +144,5 @@ public class Player {
             System.out.println("Image is null for direction: " + direction);
         }
     }
+
 }

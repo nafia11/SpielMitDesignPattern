@@ -85,7 +85,7 @@ public class GamePanel extends Canvas {
             if (player != null) {
                 player.setPosition(pos[0], pos[1]);
             } else {
-                player = new Player(username, null); // Other players don't need a key handler
+                player = new Player(username, null);
                 player.setPosition(pos[0], pos[1]);
                 players.put(username, player);
             }
@@ -93,17 +93,22 @@ public class GamePanel extends Canvas {
         render();
     }
 
-    public void updatePlayerPosition(String username, double x, double y) {
+    public void updatePlayerPosition(String username, double x, double y, String direction, int spriteNum) {
         Player player = players.get(username);
         if (player != null) {
             player.setPosition(x, y);
+            player.setDirection(direction);
+            player.setSpriteNum(spriteNum);
         } else {
-            player = new Player(username, null); // Other players don't need a key handler
+            player = new Player(username, null);
             player.setPosition(x, y);
+            player.setDirection(direction);
+            player.setSpriteNum(spriteNum);
             players.put(username, player);
         }
         render();
     }
+
 
     private void render() {
         gc.clearRect(0, 0, screenWidth, screenHeight);  // Clear the canvas

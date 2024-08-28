@@ -7,7 +7,13 @@
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/ServerCommandFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/DisconnectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/DisconnectCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/PositionUpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/PositionUpdateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/server/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/server/GameServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/server/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/server/GameState.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +27,36 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="SpielMitDesignPattern" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="SpielMitDesignPattern" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="SpielMitDesignPattern" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -48,9 +84,33 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;Application.Client.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;Gradle.Build SpielMitDesignPattern.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ClientHandlerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Load Gradle Dependencies.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.SpielMitDesignPattern [:GameClient.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.SpielMitDesignPattern [:GameServer.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testEmptyUsername.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testEmptyUsernameAssignment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testJoinWithEmptyUsername.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testNullOrEmptyUsernameHandling.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testSameUsernameHandling.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testUsernameReleaseAndReuse.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserManagementTest.testUsernameReuseAfterRelease.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UsernameManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UsernameManagerTest.testSameUsernameHandling (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UsernameManagerTest.testSameUsernameHandling.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ss.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ss.testValidUsername.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in SpielMitDesignPattern.main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsernameManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UsernameManagerTest.testSameUsernameHandling.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin script (Beta).build.gradle.kts.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -71,27 +131,21 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.protocol" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/Test" />
+      <recent name="$PROJECT_DIR$/Test/src" />
+      <recent name="$PROJECT_DIR$/Test/src/tests" />
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.client.Client" />
-      <module name="SpielMitDesignPattern.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GameClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.client.GameClient" />
       <module name="SpielMitDesignPattern.main" />
@@ -105,52 +159,116 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.server.Main" />
-      <module name="SpielMitDesignPattern.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="UserManagementTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.UserManagementTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
     </configuration>
-    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.lobby.MainApp" />
-      <module name="SpielMitDesignPattern.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.lobby.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="UserManagementTest.testEmptyUsernameAssignment" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.UserManagementTest.testEmptyUsernameAssignment&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
     </configuration>
-    <configuration name="View" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.lobby.View" />
-      <module name="SpielMitDesignPattern.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.lobby.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="ss" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.ss&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
     </configuration>
+    <configuration name="ss.testValidUsername" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.ss.testValidUsername&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.GameClient" />
+      <item itemvalue="Gradle.UserManagementTest" />
+      <item itemvalue="Gradle.UserManagementTest.testEmptyUsernameAssignment" />
+      <item itemvalue="Gradle.ss" />
+      <item itemvalue="Gradle.ss.testValidUsername" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Client" />
+        <item itemvalue="Gradle.UserManagementTest.testEmptyUsernameAssignment" />
+        <item itemvalue="Gradle.ss.testValidUsername" />
+        <item itemvalue="Gradle.ss" />
         <item itemvalue="Application.GameClient" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.MainApp" />
-        <item itemvalue="Application.View" />
+        <item itemvalue="Gradle.UserManagementTest" />
       </list>
     </recent_temporary>
   </component>

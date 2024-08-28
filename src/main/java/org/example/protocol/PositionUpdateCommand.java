@@ -16,17 +16,23 @@ public class PositionUpdateCommand implements ServerCommand {
 
     @Override
     public void execute() {
-        System.out.println("request command");
+        System.out.println("Received message: " + message);
         String[] parts = message.split(",");
-        if (parts.length >= 3) {
+
+        if (parts.length >= 5) { // Ensure there are at least 5 parts
             String username = parts[0].trim();
             try {
                 double x = Double.parseDouble(parts[1].trim());
                 double y = Double.parseDouble(parts[2].trim());
-                // Validate and update the position in the game state
-                gameState.updatePlayerPosition(username, x, y);
+                String direction = parts[3].trim();
+                int spriteNum = Integer.parseInt(parts[4].trim());
+                System.out.println("Parsed: " + username + " " + x + " " + y + " " + direction + " " + spriteNum);
+
+                // Update the position in the game state
+                gameState.updatePlayerPosition(username, x, y, direction, spriteNum);
+
                 // Notify the GameServer to broadcast the updated position
-                clientHandler.notifyPositionUpdate(username, x, y);
+                clientHandler.notifyPositionUpdate(username, x, y, direction, spriteNum);
             } catch (NumberFormatException e) {
                 System.err.println("Error parsing position update: " + e.getMessage());
             }

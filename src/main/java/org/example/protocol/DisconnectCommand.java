@@ -21,6 +21,6 @@ public class DisconnectCommand implements ServerCommand {
         }
 
         usernameManager.releaseUsername(username);
-        //clientHandler.cleanup();
+        clientHandler.cleanup();
     }
 }

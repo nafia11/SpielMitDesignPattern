@@ -113,15 +113,17 @@ public class GameClient {
                 lobbyController.addMessageToChat(username + " is ready");
             }
         } else if (message.startsWith("POSITION_UPDATE")) {
-            System.out.println("Got a request");
             String[] parts = message.substring(16).split(",");
-            if (parts.length >= 3) { // Ensure there are at least 3 parts
+            if (parts.length >= 5) { // Ensure there are at least 5 parts
                 String username = parts[0].trim();
                 try {
                     double x = Double.parseDouble(parts[1].trim());
                     double y = Double.parseDouble(parts[2].trim());
+                    String direction = parts[3].trim();
+                    int spriteNum = Integer.parseInt(parts[4].trim());
+
                     Platform.runLater(() -> {
-                        MainApp.getGamePanel().updatePlayerPosition(username, x, y);
+                        MainApp.getGamePanel().updatePlayerPosition(username, x, y, direction, spriteNum);
                     });
                 } catch (NumberFormatException e) {
                     System.err.println("Error parsing position update: " + e.getMessage());
@@ -129,7 +131,9 @@ public class GameClient {
             } else {
                 System.err.println("Invalid POSITION_UPDATE message format: " + message);
             }
-        } else if (message.startsWith("INITIAL_POSITION")) {
+        }
+
+        else if (message.startsWith("INITIAL_POSITION")) {
             String data = message.substring("INITIAL_POSITION ".length()).trim();
             String[] playerData = data.split(";");
 
@@ -173,9 +177,9 @@ public class GameClient {
 
 
     public void disconnect() {
-        sendMessage("DISCONNECT"); // Optionally inform the server that the client is disconnecting
+        sendMessage("DISCONNECT");
         shutdown();
-        Platform.exit(); // Close the application after disconnecting
+        Platform.exit();
     }
 
     public void shutdown() {
@@ -198,6 +202,5 @@ public class GameClient {
 
     public static void main(String[] args) {
         Application.launch(MainApp.class, args);
-        System.out.println(username);
     }
 }
