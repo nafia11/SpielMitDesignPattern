@@ -35,8 +35,10 @@ public class StartGameCommand implements ServerCommand {
                     System.out.println("Setting player " + handler.getUsername() + "'s position: " + initialX + "," + initialY);
                     initialX += 50;
                 }
-                System.out.println("Notifying clients about starting positions.");
-                handler.sendPlayerInitialPositions();
+            }
+            System.out.println("Notifying clients about starting positions.");
+            for (ClientHandler handler : playerMap.keySet()) {
+            handler.sendPlayerInitialPositions();
             }
         } else {
             for (ClientHandler handler : clientHandler.getConnectedClients()) {

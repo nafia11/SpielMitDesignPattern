@@ -17,11 +17,7 @@ public class Player {
     private int spriteCounter = 0;
     private int spriteNum = 1;
 
-    // For debugging
-    /*private boolean swing = false;
-    private double targetX = x;
-    private double targetY = y;
-*/
+    // Constructor
     public Player(String username, KeyHandler keyHandler) {
         this.username = username;
         this.speed = 4;
@@ -37,7 +33,6 @@ public class Player {
         left2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
         right1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
         right2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
-
     }
 
     // Set the player's position
@@ -46,13 +41,6 @@ public class Player {
         this.y = y;
     }
 
-    // Set target position for swinging
-    /*public void setSwingPosition(double targetX, double targetY) {
-        this.targetX = targetX;
-        this.targetY = targetY;
-        this.swing = true;
-    }
-*/
     // Get the player's X position
     public double getX() {
         return x;
@@ -68,6 +56,17 @@ public class Player {
         return username;
     }
 
+    // Set the player's X position
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    // Set the player's Y position
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    // Update player position based on key input
     public void update() {
         boolean isMoving = false;
 
@@ -75,10 +74,12 @@ public class Player {
             if (keyHandler.upPressed) {
                 direction = "up";
                 y -= speed;
+                System.out.println("Keyup is being pressed");
                 isMoving = true;
             } else if (keyHandler.downPressed) {
                 direction = "down";
                 y += speed;
+                System.out.println("Keydown is being pressed");
                 isMoving = true;
             } else if (keyHandler.leftPressed) {
                 direction = "left";
@@ -97,25 +98,28 @@ public class Player {
                     spriteNum = (spriteNum == 1) ? 2 : 1;
                     spriteCounter = 0;
                 }
+                // Notify the server of the new position
+                sendPositionUpdate(this.username, this.x, this.y);
+                System.out.println("from player sending update");
             } else {
                 // Set to idle sprite when not moving
                 spriteNum = 1;
             }
         }
+        else {
+            System.out.println("Keyhandler is null");
 
-        // Swing between positions if needed
-        /*if (swing) {
-            if (Math.abs(x - targetX) < speed && Math.abs(y - targetY) < speed) {
-                swing = false;
-            } else {
-                if (x < targetX) x += speed;
-                if (x > targetX) x -= speed;
-                if (y < targetY) y += speed;
-                if (y > targetY) y -= speed;
-            }
-        }*/
+        }
     }
 
+    // Send position update to the server
+    private void sendPositionUpdate(String username, double x, double y) {
+        String message = "POSITION_UPDATE " + username + "," + x + "," + y;
+        System.out.println("Sending position update: " + message);
+        // Replace with actual sending mechanism
+    }
+
+    // Draw the player on the canvas
     public void draw(GraphicsContext gc) {
         Image image = switch (direction) {
             case "up" -> (spriteNum == 1) ? up1 : up2;
@@ -127,7 +131,7 @@ public class Player {
 
         if (image != null) {
             gc.drawImage(image, x, y, 48, 48);
-            System.out.println("Drawing player: " + username + " at position (" + x + ", " + y + ")");
+            //System.out.println("Drawing player: " + username + " at position (" + x + ", " + y + ")");
         } else {
             System.out.println("Image is null for direction: " + direction);
         }

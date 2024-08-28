@@ -3,11 +3,15 @@ package org.example.client;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import org.example.entity.Player;
 import org.example.game.KeyHandler;
 
-public class GamePanel extends Pane {
+import java.util.HashMap;
+import java.util.Map;
+
+public class GamePanel extends Canvas {
+
     final int originalTileSize = 16;
     final int scale = 3;
     public final int tileSize = originalTileSize * scale;
@@ -16,65 +20,103 @@ public class GamePanel extends Pane {
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
+    private KeyHandler keyHandler;
+    private Player localPlayer; // Store the local player instance
+    private Map<String, Player> players;
     private GraphicsContext gc;
-    private Player player1, player2;
-    private KeyHandler keyHandler1;
-    private KeyHandler keyHandler2;
 
-    public GamePanel() {
-        this.setPrefSize(screenWidth, screenHeight);
-        Canvas canvas = new Canvas(screenWidth, screenHeight);
-        gc = canvas.getGraphicsContext2D();
-        this.getChildren().add(canvas);
+    public GamePanel(String localUsername) {
+        super();
+        this.players = new HashMap<>();
+        this.gc = this.getGraphicsContext2D();
+        initialize();
+        this.setWidth(screenWidth);
+        this.setHeight(screenHeight);
 
-        keyHandler1 = new KeyHandler();
-        player1 = new Player("ww", keyHandler1);
-        player2 = new Player("22", keyHandler2);
+        // Initialize KeyHandler
+        this.keyHandler = new KeyHandler();
 
-        // Set up key event handlers
-        canvas.setFocusTraversable(true);
-        canvas.setOnKeyPressed(event -> keyHandler1.handleKeyPress(event));
-        canvas.setOnKeyReleased(event -> keyHandler1.handleKeyRelease(event));
+        // Ensure the canvas can receive key events
+        this.setFocusTraversable(true);
+        this.setOnKeyPressed(keyHandler::handleKeyPress);
+        this.setOnKeyReleased(keyHandler::handleKeyRelease);
 
-        // Request focus on the canvas to capture key events
-        canvas.requestFocus();
+        // Create the local player and assign the key handler to it
+        this.localPlayer = new Player(localUsername, keyHandler);
+        addPlayer(localPlayer);
 
-        // Start the game loop
+        // Request focus to capture key inputs
+        this.requestFocus();
+
         startGameLoop();
+    }
 
-        // Test positions
-        testPlayerPositions();
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
     }
 
     private void startGameLoop() {
+        // Set up an AnimationTimer to check key states and update the local player's position
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                update();
+                if (localPlayer != null) {
+                    localPlayer.update(); // Only update the local player
+                }
                 render();
             }
         }.start();
     }
 
-    private void update() {
-        player1.update();
-        player2.update();
+    private void initialize() {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, screenWidth, screenHeight);
+    }
+
+    public void setInitialPositions(Map<String, double[]> initialPositions) {
+        for (Map.Entry<String, double[]> entry : initialPositions.entrySet()) {
+            String username = entry.getKey();
+            double[] pos = entry.getValue();
+            Player player = players.get(username);
+            if (player != null) {
+                player.setPosition(pos[0], pos[1]);
+            } else {
+                player = new Player(username, null); // Other players don't need a key handler
+                player.setPosition(pos[0], pos[1]);
+                players.put(username, player);
+            }
+        }
+        render();
+    }
+
+    public void updatePlayerPosition(String username, double x, double y) {
+        Player player = players.get(username);
+        if (player != null) {
+            player.setPosition(x, y);
+        } else {
+            player = new Player(username, null); // Other players don't need a key handler
+            player.setPosition(x, y);
+            players.put(username, player);
+        }
+        render();
     }
 
     private void render() {
-        gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the canvas
-        player1.draw(gc);
-        player2.draw(gc);
+        gc.clearRect(0, 0, screenWidth, screenHeight);  // Clear the canvas
+        for (Player player : players.values()) {
+            player.draw(gc);
+        }
     }
 
-    private void testPlayerPositions() {
-        // Set player positions for testing
-        player1.setPosition(50, 50);
-        player2.setPosition(100, 100);
-
-        // Optionally set swinging behavior, I will add it later
-        /*player1.setSwingPosition(200, 200);
-        player2.setSwingPosition(300, 300);*/
+    public void addPlayer(Player player) {
+        players.put(player.getUsername(), player);
     }
 
+    public Player getPlayer(String username) {
+        return players.get(username);
+    }
 }

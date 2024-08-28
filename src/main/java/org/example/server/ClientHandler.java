@@ -99,7 +99,9 @@ public class ClientHandler implements Runnable {
     public void sendPlayerInitialPositions() {
         for (Player player : gameState.getAllPlayers()) {
             sendMessage("INITIAL_POSITION " + player.getUsername() + "," + player.getX() + "," + player.getY());
-            System.out.println("Sending updated position from Server side..."+ player.getX() + ","+player.getY());
+            System.out.println("INITIAL_POSITION " + player.getUsername() + "," + player.getX() + "," + player.getY());
+            System.out.println("Sending updated position from Server side..." + player.getX() + "," + player.getY());
         }
     }
+
 }

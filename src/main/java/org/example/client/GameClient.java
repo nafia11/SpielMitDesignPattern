@@ -10,6 +10,8 @@ import org.example.lobby.MainApp;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameClient {
     private static final Logger logger = LogManager.getLogger(GameClient.class);
@@ -89,7 +91,7 @@ public class GameClient {
             }
         } else if (message.startsWith("USERNAME_TAKEN")) {
             String suggestedUsername = message.substring(14);
-            username= suggestedUsername;
+            username = suggestedUsername;
             if (lobbyController != null) {
                 lobbyController.promptForNewUsername(suggestedUsername);
             }
@@ -102,19 +104,66 @@ public class GameClient {
         } else if (message.startsWith("USERNAME_UPDATED")) {
             String updatedUsername = message.substring(17).trim();
             username = updatedUsername;
-        }
-        else if (message.startsWith("READY")) {
+        } else if (message.startsWith("READY")) {
             String username = message.substring(6).trim();
             if (lobbyController != null) {
                 lobbyController.addMessageToChat(username + " is ready");
             }
-        } else if (message.startsWith("READY_STATUS")) {
+        } else if (message.startsWith("POSITION_UPDATE")) {
+            System.out.println("Got a request");
+            String[] parts = message.substring(16).split(",");
+            if (parts.length >= 3) { // Ensure there are at least 3 parts
+                String username = parts[0].trim();
+                try {
+                    double x = Double.parseDouble(parts[1].trim());
+                    double y = Double.parseDouble(parts[2].trim());
+                    Platform.runLater(() -> {
+                        MainApp.getGamePanel().updatePlayerPosition(username, x, y);
+                    });
+                } catch (NumberFormatException e) {
+                    System.err.println("Error parsing position update: " + e.getMessage());
+                }
+            } else {
+                System.err.println("Invalid POSITION_UPDATE message format: " + message);
+            }
+        } else if (message.startsWith("INITIAL_POSITION")) {
+            String data = message.substring("INITIAL_POSITION ".length()).trim();
+            String[] playerData = data.split(";");
+
+            Map<String, double[]> initialPositions = new HashMap<>();
+
+            for (String entry : playerData) {
+                String[] details = entry.split(",");
+                if (details.length == 3) { // Check for exactly 3 parts
+                    String username = details[0].trim();
+                    try {
+                        double x = Double.parseDouble(details[1].trim());
+                        double y = Double.parseDouble(details[2].trim());
+                        System.out.println("x: "+x+ " y: "+y);
+                        initialPositions.put(username, new double[]{x, y});
+                        Platform.runLater(() -> {
+                            MainApp.getGamePanel().setInitialPositions(initialPositions);
+                        });
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error parsing initial position: " + e.getMessage());
+                    }
+                } else {
+                    System.err.println("Invalid INITIAL_POSITION format: " + entry);
+                }
+            }
+
+
+        }
+
+
+        else if (message.startsWith("READY_STATUS")) {
             String statusMessage = message.substring(13).trim();
             if (lobbyController != null) {
                 lobbyController.addMessageToChat(statusMessage);
             }
         }
     }
+
 
     public void disconnect() {
         sendMessage("DISCONNECT"); // Optionally inform the server that the client is disconnecting

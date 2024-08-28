@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.example.client.GameClient;
 import org.example.client.GamePanel;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class MainApp extends Application {
     private static String username;
     private static Stage primaryStage;
+    private static GamePanel gamePanel;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -79,13 +81,26 @@ public class MainApp extends Application {
 
     public static void showGameWindow() {
         Platform.runLater(() -> {
-            GamePanel gamePanel = new GamePanel();
-            Scene scene = new Scene(gamePanel, gamePanel.screenWidth, gamePanel.screenHeight);
+            System.out.println("I am in mainapp");
+            System.out.println("starting gamepanel");
+            GamePanel gamePanel = new GamePanel(username); // Pass the username here
+            MainApp.setGamePanel(gamePanel); // Initialize GamePanel
+            StackPane root = new StackPane(gamePanel);  // Create a StackPane and add the GamePanel to it
+            Scene scene = new Scene(root, gamePanel.getScreenWidth(), gamePanel.getScreenHeight()); // Use getScreenWidth and getScreenHeight for Scene size
             Stage gameStage = new Stage();
             gameStage.setTitle("Game");
             gameStage.setScene(scene);
             gameStage.show();
         });
+    }
+
+
+    public static void setGamePanel(GamePanel panel) {
+        gamePanel = panel;
+    }
+
+    public static GamePanel getGamePanel() {
+        return gamePanel;
     }
 
     public static void main(String[] args) {
