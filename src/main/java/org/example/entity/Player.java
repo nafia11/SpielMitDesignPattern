@@ -14,15 +14,17 @@ public class Player {
     private String username;
     private Image up1, up2, down1, down2, left1, left2, right1, right2;
     private KeyHandler keyHandler;
-
+    private Image idleUp, idleDown;
+    private boolean prevUpPressed, prevDownPressed;
     private int spriteCounter = 0;
     private int spriteNum = 1;
+    private boolean prevMoving = false;
 
     // Constructor
     public Player(String username, KeyHandler keyHandler) {
         this.username = username;
         this.speed = 4;
-        this.direction = "down";
+        this.direction = "idle_down";
         this.keyHandler = keyHandler;
 
         // Load images for animations
@@ -34,6 +36,9 @@ public class Player {
         left2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
         right1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
         right2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
+        idleUp = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idle_up.png")));
+        idleDown = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idle_down.png")));
+
     }
 
     // Set the player's position
@@ -98,6 +103,15 @@ public class Player {
                 isMoving = true;
             }
 
+            // Check if the player was moving up or down and the corresponding key was released
+            if (!isMoving) {
+                if (prevUpPressed && !keyHandler.upPressed) {
+                    direction = "idle_up";
+                } else if (prevDownPressed && !keyHandler.downPressed) {
+                    direction = "idle_down";
+                }
+            }
+
             if (isMoving) {
                 // Animation logic
                 spriteCounter++;
@@ -111,6 +125,13 @@ public class Player {
                 // Set to idle sprite when not moving
                 spriteNum = 1;
             }
+            if (isMoving || prevMoving) {
+                sendPositionUpdate(this.username, this.x, this.y);
+            }
+            // Update previous key states and movement state
+            prevUpPressed = keyHandler.upPressed;
+            prevDownPressed = keyHandler.downPressed;
+            prevMoving = isMoving;
         }
         else {
             System.out.println("Keyhandler is null");
@@ -134,11 +155,13 @@ public class Player {
             case "down" -> (spriteNum == 1) ? down1 : down2;
             case "left" -> (spriteNum == 1) ? left1 : left2;
             case "right" -> (spriteNum == 1) ? right1 : right2;
+            case "idle_up" -> idleUp;  // New idle state image
+            case "idle_down" -> idleDown;
             default -> null;
         };
 
         if (image != null) {
-            gc.drawImage(image, x, y, 48, 48);
+                gc.drawImage(image, x, y,   100, 100);
             //System.out.println("Drawing player: " + username + " at position (" + x + ", " + y + ")");
         } else {
             System.out.println("Image is null for direction: " + direction);

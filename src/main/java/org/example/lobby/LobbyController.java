@@ -42,15 +42,15 @@ public class LobbyController {
 
             // Create an image view for the player figure
             ImageView playerFigure = new ImageView(new Image(getClass().getResourceAsStream("/images/player_icon.png")));
-            playerFigure.setFitWidth(50);
-            playerFigure.setFitHeight(50);
-            playerFigure.setLayoutX(10 + (i * 60)); // Adjust layout as needed
-            playerFigure.setLayoutY(10);
+            playerFigure.setFitWidth(100);
+            playerFigure.setFitHeight(100);
+            playerFigure.setLayoutX(10 + (i * 100)); // Adjust layout as needed
+            playerFigure.setLayoutY(5);
 
             // Create a text label for the player name
             Text playerName = new Text(player);
-            playerName.setX(10 + (i * 60)); // Adjust layout as needed
-            playerName.setY(70); // Position below the figure
+            playerName.setX(30 + (i * 100)); // Adjust layout as needed
+            playerName.setY(100); // Position below the figure
 
             playerFiguresPane.getChildren().addAll(playerFigure, playerName);
         }

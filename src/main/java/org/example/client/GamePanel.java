@@ -99,6 +99,7 @@ public class GamePanel extends Canvas {
             player.setPosition(x, y);
             player.setDirection(direction);
             player.setSpriteNum(spriteNum);
+            System.out.println("gamepanel" + x +""+y);
         } else {
             player = new Player(username, null);
             player.setPosition(x, y);
