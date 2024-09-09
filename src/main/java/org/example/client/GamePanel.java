@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.example.entity.Player;
 import org.example.game.KeyHandler;
+import org.example.tiles.TileManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +16,14 @@ public class GamePanel extends Canvas {
     final int originalTileSize = 16;
     final int scale = 3;
     public final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
+    private TileManager tileM;
+    //TileManager tileM = new TileManager(this);
+
+
 
     private KeyHandler keyHandler;
     private Player localPlayer; // Store the local player instance
@@ -32,6 +37,14 @@ public class GamePanel extends Canvas {
         initialize();
         this.setWidth(screenWidth);
         this.setHeight(screenHeight);
+
+        // Initialize TileManager
+        tileM = new TileManager(this);
+
+        // Print debug info after loading the map data
+        //tileM.printDebugInfo();
+        tileM.getMapData().printHouseLocations();
+        tileM.getMapData().printSpawnLocations();
 
         // Initialize KeyHandler
         this.keyHandler = new KeyHandler();
@@ -112,7 +125,8 @@ public class GamePanel extends Canvas {
 
 
     private void render() {
-        gc.clearRect(0, 0, screenWidth, screenHeight);  // Clear the canvas
+       gc.clearRect(0, 0, screenWidth, screenHeight);
+        tileM.draw(gc);
         for (Player player : players.values()) {
             player.draw(gc);
         }

@@ -91,6 +91,10 @@ public class MainApp extends Application {
             gameStage.setTitle("Game");
             gameStage.setScene(scene);
             gameStage.show();
+            /*TileManager tileManager = new TileManager(gamePanel);
+            tileManager.printDebugInfo();
+            tileManager.getMapData().printHouseLocations();
+            tileManager.getMapData().printSpawnLocations();*/
         });
     }
 

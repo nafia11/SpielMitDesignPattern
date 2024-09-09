@@ -5,21 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_idle_down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/player/boy_idle_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/MapData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/Tile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/map/map_data.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/map/object_data.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/House1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Road1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Road2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/RoadEHO.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/RoadEVR.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Start.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Tree1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Tree2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/house2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/roadH.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/roadV.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/ss.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/LobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/player_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/player_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_down_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_down_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_down_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_down_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_left_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_left_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_left_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_left_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_right_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_right_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_right_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_right_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_up_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_up_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/player/boy_up_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/player/boy_up_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +131,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/nusra/OneDrive/Desktop/SpielMitDesignPattern/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/nafianusrat/Desktop/GitHub/SpielMitDesignPattern&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -151,7 +159,7 @@
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameClient">
+  <component name="RunManager">
     <configuration name="GameClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.client.GameClient" />
       <module name="SpielMitDesignPattern.main" />
