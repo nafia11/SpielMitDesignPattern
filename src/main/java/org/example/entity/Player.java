@@ -81,135 +81,7 @@ public class Player {
         this.spriteNum = spriteNum;
     }
 
-    // Update player position based on key input
-    /*public void update() {
-        boolean isMoving = false;
 
-        if (keyHandler != null) {  // Check if keyHandler is not null
-            if (keyHandler.upPressed) {
-                direction = "up";
-                y -= speed;
-                isMoving = true;
-            } else if (keyHandler.downPressed) {
-                direction = "down";
-                y += speed;
-                isMoving = true;
-            } else if (keyHandler.leftPressed) {
-                direction = "left";
-                x -= speed;
-                isMoving = true;
-            } else if (keyHandler.rightPressed) {
-                direction = "right";
-                x += speed;
-                isMoving = true;
-            }
-
-            // Check if the player was moving up or down and the corresponding key was released
-            if (!isMoving) {
-                if (prevUpPressed && !keyHandler.upPressed) {
-                    direction = "idle_up";
-                } else if (prevDownPressed && !keyHandler.downPressed) {
-                    direction = "idle_down";
-                }
-            }
-
-            if (isMoving) {
-                // Animation logic
-                spriteCounter++;
-                if (spriteCounter > 12) {
-                    spriteNum = (spriteNum == 1) ? 2 : 1;
-                    spriteCounter = 0;
-                }
-                // Notify the server of the new position
-                sendPositionUpdate(this.username, this.x, this.y);
-            } else {
-                // Set to idle sprite when not moving
-                spriteNum = 1;
-            }
-            if (isMoving || prevMoving) {
-                sendPositionUpdate(this.username, this.x, this.y);
-            }
-            // Update previous key states and movement state
-            prevUpPressed = keyHandler.upPressed;
-            prevDownPressed = keyHandler.downPressed;
-            prevMoving = isMoving;
-        }
-        else {
-            System.out.println("Keyhandler is null");
-
-        }
-    }*/
-    /*public void update() {
-        boolean isMoving = false;
-
-        if (keyHandler != null) {  // Check if keyHandler is not null
-            double newX = x;
-            double newY = y;
-
-            if (keyHandler.upPressed) {
-                direction = "up";
-                newY -= speed;
-                isMoving = true;
-            } else if (keyHandler.downPressed) {
-                direction = "down";
-                newY += speed;
-                isMoving = true;
-            } else if (keyHandler.leftPressed) {
-                direction = "left";
-                newX -= speed;
-                isMoving = true;
-            } else if (keyHandler.rightPressed) {
-                direction = "right";
-                newX += speed;
-                isMoving = true;
-            }
-
-            // Boundary checks
-            double tileSize = GamePanel.gp.tileSize;
-            //double maxX = GamePanel.gp.getScreenWidth() - tileSize;
-            //double maxY = GamePanel.gp.getScreenHeight() - tileSize+1;
-            //double maxX =2048;
-            //double maxY = 2148;
-
-            double maxX =10000000;
-            double maxY = 100000000;
-            // Prevent moving out of bounds
-            *//*if (newX >= 400 && newX <= maxX) {
-                x = newX;
-            }
-            if (newY >= 300 && newY <= maxY) {
-                y = newY;
-            }*//*
-            if (newX >= 0 && newX <= maxX) {
-                x = newX;
-            }
-            if (newY >= 0 && newY <= maxY) {
-                y = newY;
-            }
-
-            // Animation and position update logic (same as before)
-            if (isMoving) {
-                spriteCounter++;
-                if (spriteCounter > 12) {
-                    spriteNum = (spriteNum == 1) ? 2 : 1;
-                    spriteCounter = 0;
-                }
-                sendPositionUpdate(this.username, this.x, this.y);
-            } else {
-                spriteNum = 1;
-            }
-
-            if (isMoving || prevMoving) {
-                sendPositionUpdate(this.username, this.x, this.y);
-            }
-
-            prevUpPressed = keyHandler.upPressed;
-            prevDownPressed = keyHandler.downPressed;
-            prevMoving = isMoving;
-        } else {
-            System.out.println("Keyhandler is null");
-        }
-    }*/
     public void update() {
         boolean isMoving = false;
 
@@ -301,11 +173,10 @@ public class Player {
         };
 
         if (image != null) {
-            // Calculate the position relative to the local player
+
             double screenX = (x - localPlayer.getX()) + (GamePanel.gp.getScreenWidth() / 2) - 35; // Offset based on sprite width
             double screenY = (y - localPlayer.getY()) + (GamePanel.gp.getScreenHeight() / 2) - 35; // Offset based on sprite height
 
-            // Draw the player at the calculated position
             gc.drawImage(image, screenX, screenY, 100, 100);
         } else {
             System.out.println("Image is null for direction: " + direction);

@@ -36,37 +36,37 @@ public class MapData {
     }
 
     public void printRoadLocations() {
-        System.out.println("Roads and Streets locations:");
+        System.out.println("Floors locations:");
         for (int row = 0; row < baseMapData.length; row++) {
             for (int col = 0; col < baseMapData[row].length(); col++) {
                 char tileChar = baseMapData[row].charAt(col);
-                if (tileChar == 'R' || tileChar == 'V') {
+                if (tileChar == 'F' || tileChar == 'f'|| tileChar == 'E') {
                     System.out.println("Road found at: Row " + row + ", Col " + col);
                 }
             }
         }
     }
     // Method to print house locations
-    public void printHouseLocations() {
-        System.out.println("House locations:");
+    public void printChestLocations() {
+        System.out.println("Chest locations:");
         for (int row = 0; row < objectMapData.length; row++) {
             for (int col = 0; col < objectMapData[row].length(); col++) {
                 char tileChar = objectMapData[row].charAt(col);
-                if (tileChar == 'H' || tileChar == 'h') {
-                    System.out.println("House found at: Row " + row + ", Col " + col);
+                if (tileChar == 'C') {
+                    System.out.println("Chest found at: Row " + row + ", Col " + col);
                 }
             }
         }
     }
 
     // Method to print spawn locations
-    public void printSpawnLocations() {
-        System.out.println("Spawn locations:");
+    public void printBlockLocations() {
+        System.out.println("Block locations:");
         for (int row = 0; row < objectMapData.length; row++) {
             for (int col = 0; col < objectMapData[row].length(); col++) {
                 char tileChar = objectMapData[row].charAt(col);
-                if (tileChar == 'S') {  // Assuming 'S' represents a spawn point
-                    System.out.println("Spawn point found at: Row " + row + ", Col " + col);
+                if (tileChar == 'B'|| tileChar == 'b'|| tileChar == 'w') {  // Assuming 'S' represents a spawn point
+                    System.out.println("Blocks found at: Row " + row + ", Col " + col);
                 }
             }
         }
