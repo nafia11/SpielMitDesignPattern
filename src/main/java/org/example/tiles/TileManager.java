@@ -65,11 +65,16 @@ public class TileManager {
                     if (tileRow >= 0 && tileRow < cachedBaseTiles.length &&
                             tileCol >= 0 && tileCol < cachedBaseTiles[tileRow].length) {
                         Tile tile = cachedBaseTiles[tileRow][tileCol];
-                        gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
+
+                        // Ensure the tile is not null
+                        if (tile != null && tile.getImage() != null) {
+                            gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
+                        }
                     }
                 }
             }
         }
+
 
         // Draw the object layer tiles
         for (int row = 0; row < gp.maxScreenRow; row++) {

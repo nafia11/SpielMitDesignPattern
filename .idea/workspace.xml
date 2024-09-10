@@ -5,16 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Block.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Block2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Block3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Box1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Box2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Box3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Box4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/End.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Floor1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tiles/Floor2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/lobby/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/protocol/StartGameCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/protocol/StartGameCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tiles/MapData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/MapData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tiles/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/map/map_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/map/map_data.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/map/object_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/map/object_data.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/House1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/Road1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/Road2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/RoadEHO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/RoadEVR.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/Start.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/Tree1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/Tree2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/house2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/roadH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/roadV.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tiles/ss.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +166,7 @@
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameClient">
+  <component name="RunManager">
     <configuration name="GameClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.client.GameClient" />
       <module name="SpielMitDesignPattern.main" />

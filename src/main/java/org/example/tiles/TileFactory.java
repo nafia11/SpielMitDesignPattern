@@ -17,15 +17,14 @@ public class TileFactory {
 
         Tile tile = new Tile();
         switch (tileChar) {
-            case 'D' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Road1.png")));
-            case 'G' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Road2.png")));
-            case 'R' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/RoadH.png")));
-            case 'V' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/RoadV.png")));
-            case 'S' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Start.png")));
-            case 'H' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/House1.png")));
-            case 'T' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Tree1.png")));
-            case 't' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Tree2.png")));
-            default -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Road1.png")));
+            case 'F' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Floor1.png")));
+            case 'f' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Floor2.png")));
+            case 'B' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block.png")));
+            case 'b' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block3.png")));
+            case 'w' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block2.png")));
+            case 'E' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/End.png")));
+            case 'C' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box1.png")));
+
         }
 
         tileCache.put(tileChar, tile);

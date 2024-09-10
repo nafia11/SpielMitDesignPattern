@@ -306,7 +306,7 @@ public class Player {
             double screenY = (y - localPlayer.getY()) + (GamePanel.gp.getScreenHeight() / 2) - 35; // Offset based on sprite height
 
             // Draw the player at the calculated position
-            gc.drawImage(image, screenX, screenY, 70, 70);
+            gc.drawImage(image, screenX, screenY, 100, 100);
         } else {
             System.out.println("Image is null for direction: " + direction);
         }

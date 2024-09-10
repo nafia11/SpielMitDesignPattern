@@ -69,7 +69,7 @@ public class GameClient {
                 Platform.runLater(() -> handleServerMessage(finalMessage));
             }
         } catch (SocketException se) {
-            logger.error("Connection to the server lost: ", se);
+            logger.error("Connection dto the server lost: ", se);
             shutdown();
         } catch (IOException e) {
             logger.error("Error receiving message: ", e);

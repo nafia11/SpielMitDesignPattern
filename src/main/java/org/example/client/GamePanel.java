@@ -44,8 +44,10 @@ public class GamePanel extends Canvas {
 
         // Print debug info after loading the map data
         //tileM.printDebugInfo();
-        tileM.getMapData().printHouseLocations();
-        tileM.getMapData().printSpawnLocations();
+        //tileM.getMapData().printHouseLocations();
+        //tileM.getMapData().printSpawnLocations();
+        //printRoadLocations
+        tileM.getMapData().printRoadLocations();
 
         // Initialize KeyHandler
         this.keyHandler = new KeyHandler();
