@@ -12,10 +12,14 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
+        if (this.gp == null) {
+            System.out.println("GamePanel is null when passed to TileManager");
+        } else {
+            System.out.println("GamePanel passed successfully");
+        }
         this.tileFactory = new TileFactory();
         this.mapData = new MapData();
         cacheTiles();
-
     }
 
     private void cacheTiles() {
@@ -39,15 +43,52 @@ public class TileManager {
     }
 
     public void draw(GraphicsContext gc) {
-        int tileSize = gp.tileSize;
-        String[] baseMap = mapData.getBaseMapData();
-        String[] objectMap = mapData.getObjectMapData();
+        int worldX = (int) gp.getLocalPlayer().getX(); // Player's X position in the world
+        int worldY = (int) gp.getLocalPlayer().getY(); // Player's Y position in the world
 
-        // Draw base layer
-        for (int row = 0; row < cachedBaseTiles.length; row++) {
-            for (int col = 0; col < cachedBaseTiles[row].length; col++) {
-                Tile tile = cachedBaseTiles[row][col];
-                gc.drawImage(tile.image, col * tileSize, row * tileSize, tileSize, tileSize);
+        // Calculate the top-left corner of the visible screen in the world coordinates
+        int offsetX = worldX - gp.getScreenWidth() / 2;
+        int offsetY = worldY - gp.getScreenHeight() / 2;
+
+        // Draw the base layer tiles
+        for (int row = 0; row < gp.maxScreenRow; row++) {
+            for (int col = 0; col < gp.maxScreenCol; col++) {
+                // Calculate the world position of the current tile
+                int tileX = col * gp.tileSize + offsetX;
+                int tileY = row * gp.tileSize + offsetY;
+
+                // Ensure that the tile exists within the map bounds
+                if (tileX >= 0 && tileY >= 0 && tileX < mapData.getMapWidth() * gp.tileSize && tileY < mapData.getMapHeight() * gp.tileSize) {
+                    int tileRow = tileY / gp.tileSize;
+                    int tileCol = tileX / gp.tileSize;
+
+                    if (tileRow >= 0 && tileRow < cachedBaseTiles.length &&
+                            tileCol >= 0 && tileCol < cachedBaseTiles[tileRow].length) {
+                        Tile tile = cachedBaseTiles[tileRow][tileCol];
+                        gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
+                    }
+                }
+            }
+        }
+
+        // Draw the object layer tiles
+        for (int row = 0; row < gp.maxScreenRow; row++) {
+            for (int col = 0; col < gp.maxScreenCol; col++) {
+                // Calculate the world position of the current tile
+                int tileX = col * gp.tileSize + offsetX;
+                int tileY = row * gp.tileSize + offsetY;
+
+                // Ensure that the tile exists within the map bounds
+                if (tileX >= 0 && tileY >= 0 && tileX < mapData.getMapWidth() * gp.tileSize && tileY < mapData.getMapHeight() * gp.tileSize) {
+                    int tileRow = tileY / gp.tileSize;
+                    int tileCol = tileX / gp.tileSize;
+
+                    if (tileRow >= 0 && tileRow < cachedObjectTiles.length &&
+                            tileCol >= 0 && tileCol < cachedObjectTiles[tileRow].length) {
+                        Tile tile = cachedObjectTiles[tileRow][tileCol];
+                        gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
+                    }
+                }
             }
         }
     }

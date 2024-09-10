@@ -20,7 +20,7 @@ public class StartGameCommand implements ServerCommand {
     public void execute() {
         List<String> readyPlayers = gameState.getReadyPlayers();
         Map<ClientHandler, Player> playerMap = gameState.getPlayerMap();
-        int initialX = 100, initialY = 100;
+        int initialX = 400, initialY = 300;
         boolean allReady = (playerMap.size() == readyPlayers.size());
 
         System.out.println("Ready player size: " + readyPlayers.size() + " and all players: " + playerMap.size());

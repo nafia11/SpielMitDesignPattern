@@ -3,6 +3,7 @@ package org.example.entity;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.example.client.GameClient;
+import org.example.client.GamePanel;
 import org.example.game.KeyHandler;
 
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Player {
     private int spriteCounter = 0;
     private int spriteNum = 1;
     private boolean prevMoving = false;
-
+    private GamePanel gp;
     // Constructor
     public Player(String username, KeyHandler keyHandler) {
         this.username = username;
@@ -81,7 +82,7 @@ public class Player {
     }
 
     // Update player position based on key input
-    public void update() {
+    /*public void update() {
         boolean isMoving = false;
 
         if (keyHandler != null) {  // Check if keyHandler is not null
@@ -137,6 +138,144 @@ public class Player {
             System.out.println("Keyhandler is null");
 
         }
+    }*/
+    /*public void update() {
+        boolean isMoving = false;
+
+        if (keyHandler != null) {  // Check if keyHandler is not null
+            double newX = x;
+            double newY = y;
+
+            if (keyHandler.upPressed) {
+                direction = "up";
+                newY -= speed;
+                isMoving = true;
+            } else if (keyHandler.downPressed) {
+                direction = "down";
+                newY += speed;
+                isMoving = true;
+            } else if (keyHandler.leftPressed) {
+                direction = "left";
+                newX -= speed;
+                isMoving = true;
+            } else if (keyHandler.rightPressed) {
+                direction = "right";
+                newX += speed;
+                isMoving = true;
+            }
+
+            // Boundary checks
+            double tileSize = GamePanel.gp.tileSize;
+            //double maxX = GamePanel.gp.getScreenWidth() - tileSize;
+            //double maxY = GamePanel.gp.getScreenHeight() - tileSize+1;
+            //double maxX =2048;
+            //double maxY = 2148;
+
+            double maxX =10000000;
+            double maxY = 100000000;
+            // Prevent moving out of bounds
+            *//*if (newX >= 400 && newX <= maxX) {
+                x = newX;
+            }
+            if (newY >= 300 && newY <= maxY) {
+                y = newY;
+            }*//*
+            if (newX >= 0 && newX <= maxX) {
+                x = newX;
+            }
+            if (newY >= 0 && newY <= maxY) {
+                y = newY;
+            }
+
+            // Animation and position update logic (same as before)
+            if (isMoving) {
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    spriteNum = (spriteNum == 1) ? 2 : 1;
+                    spriteCounter = 0;
+                }
+                sendPositionUpdate(this.username, this.x, this.y);
+            } else {
+                spriteNum = 1;
+            }
+
+            if (isMoving || prevMoving) {
+                sendPositionUpdate(this.username, this.x, this.y);
+            }
+
+            prevUpPressed = keyHandler.upPressed;
+            prevDownPressed = keyHandler.downPressed;
+            prevMoving = isMoving;
+        } else {
+            System.out.println("Keyhandler is null");
+        }
+    }*/
+    public void update() {
+        boolean isMoving = false;
+
+        if (keyHandler != null) {
+            double newX = x;
+            double newY = y;
+
+            if (keyHandler.upPressed) {
+                direction = "up";
+                newY -= speed;
+                isMoving = true;
+            } else if (keyHandler.downPressed) {
+                direction = "down";
+                newY += speed;
+                isMoving = true;
+            } else if (keyHandler.leftPressed) {
+                direction = "left";
+                newX -= speed;
+                isMoving = true;
+            } else if (keyHandler.rightPressed) {
+                direction = "right";
+                newX += speed;
+                isMoving = true;
+            }
+
+            // Handle idle state transitions
+            if (!isMoving) {
+                // Transition to idle based on the last movement direction
+                if (direction.equals("up")) {
+                    direction = "idle_up";
+                } else if (direction.equals("down")) {
+                    direction = "idle_down";
+                }
+            }
+
+            // Ensure the player stays within bounds
+            double maxX = 2048;
+            double maxY = 2148;
+            if (newX >= 400 && newX <= maxX) {
+                x = newX;
+            }
+            if (newY >= 300 && newY <= maxY) {
+                y = newY;
+            }
+
+            // Handle sprite animation for movement
+            if (isMoving) {
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    spriteNum = (spriteNum == 1) ? 2 : 1;
+                    spriteCounter = 0;
+                }
+                sendPositionUpdate(this.username, this.x, this.y);
+            } else {
+                spriteNum = 1; // Reset to the first sprite when idle
+            }
+
+            // Always notify the server if the player is moving or has just stopped moving
+            if (isMoving || prevMoving) {
+                sendPositionUpdate(this.username, this.x, this.y);
+            }
+
+            prevMoving = isMoving;
+        } else {
+            System.out.println("KeyHandler is null");
+        }
     }
 
     // Send position update to the server
@@ -147,25 +286,32 @@ public class Player {
         GameClient.getInstance().sendMessage(message);
     }
 
+    // Inside Player class or movement handling logic
 
     // Draw the player on the canvas
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc , Player localPlayer) {
         Image image = switch (direction) {
             case "up" -> (spriteNum == 1) ? up1 : up2;
             case "down" -> (spriteNum == 1) ? down1 : down2;
             case "left" -> (spriteNum == 1) ? left1 : left2;
             case "right" -> (spriteNum == 1) ? right1 : right2;
-            case "idle_up" -> idleUp;  // New idle state image
+            case "idle_up" -> idleUp;
             case "idle_down" -> idleDown;
             default -> null;
         };
 
         if (image != null) {
-                gc.drawImage(image, x, y,   70, 70);
-            //System.out.println("Drawing player: " + username + " at position (" + x + ", " + y + ")");
+            // Calculate the position relative to the local player
+            double screenX = (x - localPlayer.getX()) + (GamePanel.gp.getScreenWidth() / 2) - 35; // Offset based on sprite width
+            double screenY = (y - localPlayer.getY()) + (GamePanel.gp.getScreenHeight() / 2) - 35; // Offset based on sprite height
+
+            // Draw the player at the calculated position
+            gc.drawImage(image, screenX, screenY, 70, 70);
         } else {
             System.out.println("Image is null for direction: " + direction);
         }
+
+
     }
 
 }

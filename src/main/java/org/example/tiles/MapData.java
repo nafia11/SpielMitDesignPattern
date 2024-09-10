@@ -49,9 +49,9 @@ public class MapData {
     // Method to print house locations
     public void printHouseLocations() {
         System.out.println("House locations:");
-        for (int row = 0; row < baseMapData.length; row++) {
-            for (int col = 0; col < baseMapData[row].length(); col++) {
-                char tileChar = baseMapData[row].charAt(col);
+        for (int row = 0; row < objectMapData.length; row++) {
+            for (int col = 0; col < objectMapData[row].length(); col++) {
+                char tileChar = objectMapData[row].charAt(col);
                 if (tileChar == 'H' || tileChar == 'h') {
                     System.out.println("House found at: Row " + row + ", Col " + col);
                 }
@@ -62,14 +62,22 @@ public class MapData {
     // Method to print spawn locations
     public void printSpawnLocations() {
         System.out.println("Spawn locations:");
-        for (int row = 0; row < baseMapData.length; row++) {
-            for (int col = 0; col < baseMapData[row].length(); col++) {
-                char tileChar = baseMapData[row].charAt(col);
+        for (int row = 0; row < objectMapData.length; row++) {
+            for (int col = 0; col < objectMapData[row].length(); col++) {
+                char tileChar = objectMapData[row].charAt(col);
                 if (tileChar == 'S') {  // Assuming 'S' represents a spawn point
                     System.out.println("Spawn point found at: Row " + row + ", Col " + col);
                 }
             }
         }
+    }
+
+    public int getMapWidth() {
+        return baseMapData[0].length();
+    }
+
+    public int getMapHeight() {
+        return baseMapData.length;
     }
 
 }

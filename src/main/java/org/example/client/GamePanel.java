@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GamePanel extends Canvas {
-
+    public static GamePanel gp;
     final int originalTileSize = 16;
     final int scale = 3;
     public final int tileSize = originalTileSize * scale;
@@ -31,7 +31,8 @@ public class GamePanel extends Canvas {
     private GraphicsContext gc;
 
     public GamePanel(String localUsername) {
-        super();
+        gp = this;
+        //super();
         this.players = new HashMap<>();
         this.gc = this.getGraphicsContext2D();
         initialize();
@@ -85,6 +86,10 @@ public class GamePanel extends Canvas {
         }.start();
     }
 
+    public Player getLocalPlayer() {
+        return localPlayer;
+    }
+
     private void initialize() {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, screenWidth, screenHeight);
@@ -125,12 +130,18 @@ public class GamePanel extends Canvas {
 
 
     private void render() {
-       gc.clearRect(0, 0, screenWidth, screenHeight);
+        gc.clearRect(0, 0, screenWidth, screenHeight);
+
+        // Draw the world (tiles) relative to the player's position
         tileM.draw(gc);
+
+        // Draw all players relative to the local player
         for (Player player : players.values()) {
-            player.draw(gc);
+            player.draw(gc, localPlayer);
         }
     }
+
+
 
     public void addPlayer(Player player) {
         players.put(player.getUsername(), player);
