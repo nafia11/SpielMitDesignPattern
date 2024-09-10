@@ -4,7 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.example.client.GameClient;
 import org.example.client.GamePanel;
+import org.example.game.CollisionDetection;
 import org.example.game.KeyHandler;
+import org.example.tiles.TileManager;
 
 import java.util.Objects;
 
@@ -82,13 +84,14 @@ public class Player {
     }
 
 
-    public void update() {
+    /*public void update() {
         boolean isMoving = false;
 
         if (keyHandler != null) {
             double newX = x;
             double newY = y;
 
+            // Handle movement based on key presses
             if (keyHandler.upPressed) {
                 direction = "up";
                 newY -= speed;
@@ -107,9 +110,8 @@ public class Player {
                 isMoving = true;
             }
 
-            // Handle idle state transitions
+            // Handle idle state transitions if not moving
             if (!isMoving) {
-                // Transition to idle based on the last movement direction
                 if (direction.equals("up")) {
                     direction = "idle_up";
                 } else if (direction.equals("down")) {
@@ -117,14 +119,107 @@ public class Player {
                 }
             }
 
-            // Ensure the player stays within bounds
-            double maxX = 2048;
-            double maxY = 2148;
-            if (newX >= 400 && newX <= maxX) {
-                x = newX;
+
+            TileManager tileManager = null;
+            if (GamePanel.gp != null) {
+                // Safe to call gp methods here
+                tileManager = GamePanel.gp.getTileManager();
+            } else {
+                // Handle the case where gp is null (which should not happen if gp is set correctly)
+                System.err.println("Warning: GamePanel instance is not initialized yet.");
             }
-            if (newY >= 300 && newY <= maxY) {
-                y = newY;
+
+            // Check for collisions if the tileManager is available
+            if (tileManager != null) {
+                CollisionDetection collisionDetection = new CollisionDetection(GamePanel.gp, tileManager);
+                if (!collisionDetection.isCollisionDetected(this, newX, newY)) {
+                    // No collision, update position
+                    x = newX;
+                    y = newY;
+                }
+            }
+
+            // Handle sprite animation for movement
+            if (isMoving) {
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    spriteNum = (spriteNum == 1) ? 2 : 1;
+                    spriteCounter = 0;
+                }
+            } else {
+                spriteNum = 1; // Reset to the first sprite when idle
+            }
+
+            prevMoving = isMoving;
+        } else {
+            System.out.println("KeyHandler is null");
+        }
+    }*/
+    public void update() {
+        boolean isMoving = false;
+
+        if (keyHandler != null) {
+            double newX = x;
+            double newY = y;
+
+            // Handle movement based on key presses
+            if (keyHandler.upPressed) {
+                direction = "up";
+                newY -= speed;
+                isMoving = true;
+            } else if (keyHandler.downPressed) {
+                direction = "down";
+                newY += speed;
+                isMoving = true;
+            } else if (keyHandler.leftPressed) {
+                direction = "left";
+                newX -= speed;
+                isMoving = true;
+            } else if (keyHandler.rightPressed) {
+                direction = "right";
+                newX += speed;
+                isMoving = true;
+            }
+
+            // Handle idle state transitions if not moving
+            if (!isMoving) {
+                if (direction.equals("up")) {
+                    direction = "idle_up";
+                } else if (direction.equals("down")) {
+                    direction = "idle_down";
+                }
+            }
+
+            TileManager tileManager = null;
+            if (GamePanel.gp != null) {
+                // Safe to call gp methods here
+                tileManager = GamePanel.gp.getTileManager();
+            } else {
+                System.err.println("Warning: GamePanel instance is not initialized yet.");
+            }
+
+            // Check for collisions first
+            boolean collisionDetected = false;
+            if (tileManager != null) {
+                CollisionDetection collisionDetection = new CollisionDetection(GamePanel.gp, tileManager);
+                collisionDetected = collisionDetection.isCollisionDetected(this, newX, newY);
+            }
+
+            // If no collision, check boundaries and update position
+            if (!collisionDetected) {
+                // Define the boundaries
+                double maxX = 2048;  // Maximum X coordinate for the player
+                double maxY = 2148;  // Maximum Y coordinate for the player
+                double minX = 400;     // Minimum X coordinate (left boundary)
+                double minY = 300;     // Minimum Y coordinate (top boundary)
+
+                // Ensure the player stays within bounds
+                if (newX >= minX && newX <= maxX) {
+                    x = newX;
+                }
+                if (newY >= minY && newY <= maxY) {
+                    y = newY;
+                }
             }
 
             // Handle sprite animation for movement
@@ -149,6 +244,7 @@ public class Player {
             System.out.println("KeyHandler is null");
         }
     }
+
 
     // Send position update to the server
     private void sendPositionUpdate(String username, double x, double y) {
@@ -186,3 +282,4 @@ public class Player {
     }
 
 }
+

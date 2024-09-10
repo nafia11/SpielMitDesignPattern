@@ -138,6 +138,12 @@ public class GamePanel extends Canvas {
         }
     }
 
+    public Map<String, Player> getPlayers() {
+        return players;
+    }
+    public TileManager getTileManager() {
+        return tileM;
+    }
 
 
     public void addPlayer(Player player) {
