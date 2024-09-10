@@ -20,11 +20,19 @@ public class TileFactory {
             case 'F' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Floor1.png")));
             case 'f' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Floor2.png")));
             case 'E' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/End.png")));
-            case 'B' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block.png")));
-            case 'b' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block3.png")));
-            case 'w' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block2.png")));
-            case 'C' -> tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box1.png")));
-
+            case 'B' -> {
+                tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block.png")));
+                tile.collision = true;
+            }
+            case 'b' -> { tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block3.png")));
+                tile.collision = true;
+            }
+            case 'w' -> { tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block2.png")));
+                tile.collision = true;
+            }
+            case 'C' -> { tile.image = new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box1.png")));
+                tile.collision = true;
+            }
         }
 
         tileCache.put(tileChar, tile);

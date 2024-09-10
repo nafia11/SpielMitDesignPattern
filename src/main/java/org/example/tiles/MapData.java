@@ -80,4 +80,12 @@ public class MapData {
         return baseMapData.length;
     }
 
+    public char getTileAt(int row, int col, boolean isBaseMap) {
+        String[] map = isBaseMap ? baseMapData : objectMapData;
+        // Check bounds to avoid ArrayIndexOutOfBoundsException
+        if (row >= 0 && row < map.length && col >= 0 && col < map[0].length()) {
+            return map[row].charAt(col);
+        }
+        return ' '; // Return an empty space for out-of-bounds access
+    }
 }
