@@ -144,7 +144,9 @@ public class GamePanel extends Canvas {
     public TileManager getTileManager() {
         return tileM;
     }
-
+    public int getTileSize() {
+        return tileSize;
+    }
 
     public void addPlayer(Player player) {
         players.put(player.getUsername(), player);
