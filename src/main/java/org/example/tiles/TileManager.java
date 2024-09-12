@@ -1,7 +1,6 @@
 package org.example.tiles;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import org.example.client.GamePanel;
 
 public class TileManager {
@@ -76,6 +75,7 @@ public class TileManager {
             }
         }
 
+
         // Draw the object layer tiles
         for (int row = 0; row < gp.maxScreenRow; row++) {
             for (int col = 0; col < gp.maxScreenCol; col++) {
@@ -91,22 +91,7 @@ public class TileManager {
                     if (tileRow >= 0 && tileRow < cachedObjectTiles.length &&
                             tileCol >= 0 && tileCol < cachedObjectTiles[tileRow].length) {
                         Tile tile = cachedObjectTiles[tileRow][tileCol];
-
-                        // Ensure the tile is not null and has an image to draw
-                        if (tile != null) {
-                            // For animated tiles, draw the current frame
-                            if (tile instanceof AnimatedTile animatedTile) {
-                                Image currentFrame = animatedTile.getCurrentImage(); // Get the current frame image
-                                if (currentFrame != null) {
-                                    gc.drawImage(currentFrame, tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
-                                }
-                            } else {
-                                // For static tiles, just draw the single image
-                                if (tile.getImage() != null) {
-                                    gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
-                                }
-                            }
-                        }
+                        gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
                     }
                 }
             }

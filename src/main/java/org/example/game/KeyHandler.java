@@ -4,7 +4,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class KeyHandler {
-    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed;
 
     public void handleKeyPress(KeyEvent event) {
         KeyCode code = event.getCode();
@@ -19,9 +19,6 @@ public class KeyHandler {
         }
         if (code == KeyCode.D) {
             rightPressed = true;
-        }
-        if (code == KeyCode.E) {
-            ePressed = true;
         }
     }
 
@@ -38,9 +35,6 @@ public class KeyHandler {
         }
         if (code == KeyCode.D) {
             rightPressed = false;
-        }
-        if (code == KeyCode.E) {
-            ePressed = false;
         }
     }
 }

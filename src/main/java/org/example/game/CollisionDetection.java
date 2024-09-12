@@ -33,16 +33,11 @@ public class CollisionDetection {
 
         // Check for collisions with object tiles (like blocks)
         Tile objectTile = TileFactory.createTile(objectTileChar);
-        if (objectTile.hasCollision()) {
+        if (objectTile.collision) {
             return true;
         }
 
-        // Check for collisions with base tiles if needed
-        Tile baseTile = TileFactory.createTile(baseTileChar);
-        if (baseTile.hasCollision()) {
-            return true;
-        }
-
+        // Add more conditions if necessary, for example, checking the base tile collision
         return false;
     }
 
