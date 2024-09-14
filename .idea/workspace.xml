@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5a53646e-45a9-4bd4-a2ca-e43f0985cbbd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tiles/AnimatedTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/AnimatedTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tiles/TileFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/map/object_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/map/object_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +139,7 @@
       <recent name="C:\Users\nusra\OneDrive\Desktop\SpielMitDesignPattern\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GameClient">
     <configuration name="GameClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.client.GameClient" />
       <module name="SpielMitDesignPattern.main" />

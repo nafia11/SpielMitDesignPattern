@@ -28,6 +28,12 @@ public class Player {
     private GamePanel gp;
     private Player player;
     private MapData mapData;
+
+    private int interactionCount = 0; // Counter for successful interactions
+    private boolean canInteract = true; // Flag to control interaction state
+    private long lastInteractionTime = 0;
+
+
     // Constructor
     public Player(String username, KeyHandler keyHandler) {
         this.username = username;
@@ -113,9 +119,10 @@ public class Player {
                 newX += speed;
                 isMoving = true;
             }
-            else if (keyHandler.ePressed) {
-
+            else if (keyHandler.ePressed && canInteract) {
                 checkForInteraction();
+                canInteract = false; // Disable further interactions until allowed
+                lastInteractionTime = System.currentTimeMillis(); // Update last interaction time
             }
 
             // Handle idle state transitions if not moving
@@ -167,6 +174,7 @@ public class Player {
                     spriteCounter = 0;
                 }
                 sendPositionUpdate(this.username, this.x, this.y);
+                canInteract = true;
             } else {
                 spriteNum = 1; // Reset to the first sprite when idle
             }
@@ -177,6 +185,11 @@ public class Player {
             }
 
             prevMoving = isMoving;
+            if (System.currentTimeMillis() - lastInteractionTime > 11000) { // 500 ms delay
+                canInteract = true;
+            }
+
+
         } else {
             System.out.println("KeyHandler is null");
         }
@@ -210,8 +223,11 @@ public class Player {
 
         if (closestTile != null) {
             ((AnimatedTile) closestTile).interact();  // Animate only the nearest tile
+            interactionCount++; // Increment the interaction count
             System.out.println("Interacted with the nearest tile at Row " + closestRow + ", Col " + closestCol);
+            System.out.println("InterectionCount"+interactionCount );
         }
+
 
     }
 
