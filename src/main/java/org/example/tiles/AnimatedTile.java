@@ -31,20 +31,16 @@ public class AnimatedTile extends Tile {
     // Trigger an interaction with the chest (animation)
     public void interact() {
         if (images != null && images.length > 0) {
-            // Show animation by cycling through images
-            nextFrame();
+            // Show the second frame immediately
+            currentFrameIndex = 1;
 
-            // Use a transition to move through frames and revert back after a delay
-            PauseTransition delay = new PauseTransition(Duration.seconds(40));
-            delay.setOnFinished(event -> nextFrame());  // Advance to the next frame after 1 second
-            delay.play();
-
-            // Revert back to the original state after a longer delay
-            PauseTransition revertDelay = new PauseTransition(Duration.seconds(60)); // 1 minute delay
+            // Create a PauseTransition to reset to the original frame after 10 seconds
+            PauseTransition revertDelay = new PauseTransition(Duration.seconds(10));
             revertDelay.setOnFinished(event -> resetToOriginalFrame());
             revertDelay.play();
         }
     }
+
 
     // Reset the tile to its original state
     private void resetToOriginalFrame() {

@@ -44,7 +44,7 @@ public class TileFactory {
                 tile.setImage(new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block2.png"))));
                 tile.setCollision(true);
                 break;
-            case 'C':
+            case 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T':
                 tile = new AnimatedTile(TileType.CHEST, true,
                         new Image[]{
                                 new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box1.png"))),
@@ -52,6 +52,7 @@ public class TileFactory {
                                 //new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box2.png")))
                         });
                 break;
+
             default:
                 // Log the invalid tile character and use a default or placeholder tile
                 System.err.println("Warning: Invalid tile character: " + tileChar);
