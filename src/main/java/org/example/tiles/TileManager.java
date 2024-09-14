@@ -74,20 +74,19 @@ public class TileManager {
             for (int col = startCol; col < endCol; col++) {
                 Tile tile = cachedObjectTiles[row][col];
                 if (tile != null) {
-                    // Handle animated tiles
+                    int tileX = col * gp.tileSize - offsetX;
+                    int tileY = row * gp.tileSize - offsetY;
                     if (tile instanceof AnimatedTile animatedTile) {
                         Image currentFrame = animatedTile.getCurrentImage();
                         if (currentFrame != null) {
-                            int tileX = col * gp.tileSize - offsetX;
-                            int tileY = row * gp.tileSize - offsetY;
                             gc.drawImage(currentFrame, tileX, tileY, gp.tileSize, gp.tileSize);
                         }
-                    } else if (tile.getImage() != null) {
-                        int tileX = col * gp.tileSize - offsetX;
-                        int tileY = row * gp.tileSize - offsetY;
+                    } else {
+                        // Draw static tiles
                         gc.drawImage(tile.getImage(), tileX, tileY, gp.tileSize, gp.tileSize);
                     }
                 }
+
             }
         }
     }

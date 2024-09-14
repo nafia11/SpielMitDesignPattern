@@ -48,8 +48,8 @@ public class TileFactory {
                 tile = new AnimatedTile(TileType.CHEST, true,
                         new Image[]{
                                 new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box1.png"))),
-                                new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box2.png"))),
-                                new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box3.png")))
+                                new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box3.png"))),
+                                //new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box2.png")))
                         });
                 break;
             default:
@@ -59,7 +59,9 @@ public class TileFactory {
                 break;
         }
 
-        tileCache.put(tileChar, tile);
+
+            tileCache.put(tileChar, tile);
+
         return tile;
     }
 

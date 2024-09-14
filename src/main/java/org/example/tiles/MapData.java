@@ -88,4 +88,22 @@ public class MapData {
         }
         return ' '; // Return an empty space for out-of-bounds access
     }
+
+    // New method to get a tile specifically from the object map
+    public Tile getTileAtt(int row, int col, boolean isBaseMap) {
+        String[] map = isBaseMap ? baseMapData : objectMapData;
+        // Check bounds to avoid ArrayIndexOutOfBoundsException
+        if (row >= 0 && row < map.length && col >= 0 && col < map[0].length()) {
+            char tileChar = map[row].charAt(col);
+            return TileFactory.createTile(tileChar);
+        }
+        return null; // Return null for out-of-bounds access
+    }
+
+
+    // New method for the object map
+    public Tile getTileAtObjectMap(int row, int col) {
+        return getTileAtt(row, col, false); // Use object map
+    }
+
 }

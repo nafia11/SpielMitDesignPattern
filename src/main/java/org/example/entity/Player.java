@@ -6,6 +6,9 @@ import org.example.client.GameClient;
 import org.example.client.GamePanel;
 import org.example.game.CollisionDetection;
 import org.example.game.KeyHandler;
+import org.example.tiles.AnimatedTile;
+import org.example.tiles.MapData;
+import org.example.tiles.Tile;
 import org.example.tiles.TileManager;
 
 import java.util.Objects;
@@ -23,6 +26,8 @@ public class Player {
     private int spriteNum = 1;
     private boolean prevMoving = false;
     private GamePanel gp;
+    private Player player;
+    private MapData mapData;
     // Constructor
     public Player(String username, KeyHandler keyHandler) {
         this.username = username;
@@ -108,6 +113,10 @@ public class Player {
                 newX += speed;
                 isMoving = true;
             }
+            else if (keyHandler.ePressed) {
+
+                checkForInteraction();
+            }
 
             // Handle idle state transitions if not moving
             if (!isMoving) {
@@ -172,6 +181,50 @@ public class Player {
             System.out.println("KeyHandler is null");
         }
     }
+
+    private void checkForInteraction() {
+        initializeMapData(); // Ensure mapData is initialized before use
+
+        int playerRow = (int) y / 48;
+        int playerCol = (int) x / 48;
+
+        Tile closestTile = null;
+        double closestDistance = Double.MAX_VALUE;
+        int closestRow = -1;
+        int closestCol = -1;
+
+        for (int row = playerRow - 1; row <= playerRow + 1; row++) {
+            for (int col = playerCol - 1; col <= playerCol + 1; col++) {
+                Tile tile = mapData.getTileAtObjectMap(row, col);
+                if (tile instanceof AnimatedTile) {
+                    double distance = Math.sqrt(Math.pow(row - playerRow, 2) + Math.pow(col - playerCol, 2));
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestTile = tile;
+                        closestRow = row;
+                        closestCol = col;
+                    }
+                }
+            }
+        }
+
+        if (closestTile != null) {
+            ((AnimatedTile) closestTile).interact();  // Animate only the nearest tile
+            System.out.println("Interacted with the nearest tile at Row " + closestRow + ", Col " + closestCol);
+        }
+
+    }
+
+
+
+
+
+    private void initializeMapData() {
+        if (this.mapData == null) {
+            this.mapData = new MapData(); // Load map data lazily
+        }
+    }
+
 
 
     // Send position update to the server
