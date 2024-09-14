@@ -47,71 +47,51 @@ public class TileManager {
         int worldX = (int) gp.getLocalPlayer().getX(); // Player's X position in the world
         int worldY = (int) gp.getLocalPlayer().getY(); // Player's Y position in the world
 
-        // Calculate the top-left corner of the visible screen in the world coordinates
+        // Calculate the top-left corner of the visible screen in world coordinates
         int offsetX = worldX - gp.getScreenWidth() / 2;
         int offsetY = worldY - gp.getScreenHeight() / 2;
 
-        // Draw the base layer tiles
-        for (int row = 0; row < gp.maxScreenRow; row++) {
-            for (int col = 0; col < gp.maxScreenCol; col++) {
-                // Calculate the world position of the current tile
-                int tileX = col * gp.tileSize + offsetX;
-                int tileY = row * gp.tileSize + offsetY;
+        // Calculate the boundaries for rendering the visible tiles
+        int startRow = Math.max(0, offsetY / gp.tileSize);
+        int endRow = Math.min(cachedBaseTiles.length, (offsetY + gp.getScreenHeight()) / gp.tileSize + 1);
+        int startCol = Math.max(0, offsetX / gp.tileSize);
+        int endCol = Math.min(cachedBaseTiles[0].length, (offsetX + gp.getScreenWidth()) / gp.tileSize + 1);
 
-                // Ensure that the tile exists within the map bounds
-                if (tileX >= 0 && tileY >= 0 && tileX < mapData.getMapWidth() * gp.tileSize && tileY < mapData.getMapHeight() * gp.tileSize) {
-                    int tileRow = tileY / gp.tileSize;
-                    int tileCol = tileX / gp.tileSize;
-
-                    if (tileRow >= 0 && tileRow < cachedBaseTiles.length &&
-                            tileCol >= 0 && tileCol < cachedBaseTiles[tileRow].length) {
-                        Tile tile = cachedBaseTiles[tileRow][tileCol];
-
-                        // Ensure the tile is not null
-                        if (tile != null && tile.getImage() != null) {
-                            gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
-                        }
-                    }
+        // Draw the base layer tiles (ground)
+        for (int row = startRow; row < endRow; row++) {
+            for (int col = startCol; col < endCol; col++) {
+                Tile tile = cachedBaseTiles[row][col];
+                if (tile != null && tile.getImage() != null) {
+                    int tileX = col * gp.tileSize - offsetX;
+                    int tileY = row * gp.tileSize - offsetY;
+                    gc.drawImage(tile.getImage(), tileX, tileY, gp.tileSize, gp.tileSize);
                 }
             }
         }
 
-        // Draw the object layer tiles
-        for (int row = 0; row < gp.maxScreenRow; row++) {
-            for (int col = 0; col < gp.maxScreenCol; col++) {
-                // Calculate the world position of the current tile
-                int tileX = col * gp.tileSize + offsetX;
-                int tileY = row * gp.tileSize + offsetY;
-
-                // Ensure that the tile exists within the map bounds
-                if (tileX >= 0 && tileY >= 0 && tileX < mapData.getMapWidth() * gp.tileSize && tileY < mapData.getMapHeight() * gp.tileSize) {
-                    int tileRow = tileY / gp.tileSize;
-                    int tileCol = tileX / gp.tileSize;
-
-                    if (tileRow >= 0 && tileRow < cachedObjectTiles.length &&
-                            tileCol >= 0 && tileCol < cachedObjectTiles[tileRow].length) {
-                        Tile tile = cachedObjectTiles[tileRow][tileCol];
-
-                        // Ensure the tile is not null and has an image to draw
-                        if (tile != null) {
-                            // For animated tiles, draw the current frame
-                            if (tile instanceof AnimatedTile animatedTile) {
-                                Image currentFrame = animatedTile.getCurrentImage(); // Get the current frame image
-                                if (currentFrame != null) {
-                                    gc.drawImage(currentFrame, tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
-                                }
-                            } else {
-                                // For static tiles, just draw the single image
-                                if (tile.getImage() != null) {
-                                    gc.drawImage(tile.getImage(), tileX - offsetX, tileY - offsetY, gp.tileSize, gp.tileSize);
-                                }
-                            }
+        // Draw the object layer tiles (objects, decorations)
+        for (int row = startRow; row < endRow; row++) {
+            for (int col = startCol; col < endCol; col++) {
+                Tile tile = cachedObjectTiles[row][col];
+                if (tile != null) {
+                    // Handle animated tiles
+                    if (tile instanceof AnimatedTile animatedTile) {
+                        Image currentFrame = animatedTile.getCurrentImage();
+                        if (currentFrame != null) {
+                            int tileX = col * gp.tileSize - offsetX;
+                            int tileY = row * gp.tileSize - offsetY;
+                            gc.drawImage(currentFrame, tileX, tileY, gp.tileSize, gp.tileSize);
                         }
+                    } else if (tile.getImage() != null) {
+                        int tileX = col * gp.tileSize - offsetX;
+                        int tileY = row * gp.tileSize - offsetY;
+                        gc.drawImage(tile.getImage(), tileX, tileY, gp.tileSize, gp.tileSize);
                     }
                 }
             }
         }
     }
+
 
     public MapData getMapData() {
         return mapData;

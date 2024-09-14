@@ -18,18 +18,42 @@ public class CollisionDetection {
 
     // Check if the player is colliding with a tile
     public boolean checkTileCollision(Player player, double newX, double newY) {
-        int playerTileX = (int) (newX / gp.tileSize);
-        int playerTileY = (int) (newY / gp.tileSize);
+        // Player dimensions
+        int playerWidth = (int) player.getWidth();
+        int playerHeight = (int) player.getHeight();
+
+        // Convert player position to tile coordinates (top-left corner)
+        int topLeftTileX = (int) (newX / gp.tileSize);
+        int topLeftTileY = (int) (newY / gp.tileSize);
+
+        // Calculate other corners (top-right, bottom-left, bottom-right)
+        int topRightTileX = (int) ((newX + playerWidth) / gp.tileSize);
+        int bottomLeftTileY = (int) ((newY + playerHeight) / gp.tileSize);
+        int bottomRightTileX = (int) ((newX + playerWidth) / gp.tileSize);
+        int bottomRightTileY = (int) ((newY + playerHeight) / gp.tileSize);
 
         // Check if the new position is within the map bounds
-        if (playerTileX < 0 || playerTileX >= tileManager.getMapData().getMapWidth() ||
-                playerTileY < 0 || playerTileY >= tileManager.getMapData().getMapHeight()) {
+        if (topLeftTileX < 0 || topRightTileX >= tileManager.getMapData().getMapWidth() ||
+                topLeftTileY < 0 || bottomRightTileY >= tileManager.getMapData().getMapHeight()) {
             return true; // Prevent moving out of bounds
         }
 
+        // Check for collisions with all corners of the player's bounding box
+        if (checkTileCollisionAt(topLeftTileX, topLeftTileY) ||
+                checkTileCollisionAt(topRightTileX, topLeftTileY) ||
+                checkTileCollisionAt(topLeftTileX, bottomLeftTileY) ||
+                checkTileCollisionAt(bottomRightTileX, bottomRightTileY)) {
+            return true; // Collision detected
+        }
+
+        return false; // No collision
+    }
+
+    // Helper method to check tile collision at specific tile coordinates
+    private boolean checkTileCollisionAt(int tileX, int tileY) {
         // Get the tiles at the new position
-        char baseTileChar = tileManager.getMapData().getTileAt(playerTileY, playerTileX, true);
-        char objectTileChar = tileManager.getMapData().getTileAt(playerTileY, playerTileX, false);
+        char baseTileChar = tileManager.getMapData().getTileAt(tileY, tileX, true);
+        char objectTileChar = tileManager.getMapData().getTileAt(tileY, tileX, false);
 
         // Check for collisions with object tiles (like blocks)
         Tile objectTile = TileFactory.createTile(objectTileChar);
@@ -43,8 +67,9 @@ public class CollisionDetection {
             return true;
         }
 
-        return false;
+        return false; // No collision at this tile
     }
+
 
     // Check if the player is colliding with another player
     public boolean checkPlayerCollision(Player player, double newX, double newY) {

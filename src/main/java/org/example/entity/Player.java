@@ -83,78 +83,6 @@ public class Player {
         this.spriteNum = spriteNum;
     }
 
-
-    /*public void update() {
-        boolean isMoving = false;
-
-        if (keyHandler != null) {
-            double newX = x;
-            double newY = y;
-
-            // Handle movement based on key presses
-            if (keyHandler.upPressed) {
-                direction = "up";
-                newY -= speed;
-                isMoving = true;
-            } else if (keyHandler.downPressed) {
-                direction = "down";
-                newY += speed;
-                isMoving = true;
-            } else if (keyHandler.leftPressed) {
-                direction = "left";
-                newX -= speed;
-                isMoving = true;
-            } else if (keyHandler.rightPressed) {
-                direction = "right";
-                newX += speed;
-                isMoving = true;
-            }
-
-            // Handle idle state transitions if not moving
-            if (!isMoving) {
-                if (direction.equals("up")) {
-                    direction = "idle_up";
-                } else if (direction.equals("down")) {
-                    direction = "idle_down";
-                }
-            }
-
-
-            TileManager tileManager = null;
-            if (GamePanel.gp != null) {
-                // Safe to call gp methods here
-                tileManager = GamePanel.gp.getTileManager();
-            } else {
-                // Handle the case where gp is null (which should not happen if gp is set correctly)
-                System.err.println("Warning: GamePanel instance is not initialized yet.");
-            }
-
-            // Check for collisions if the tileManager is available
-            if (tileManager != null) {
-                CollisionDetection collisionDetection = new CollisionDetection(GamePanel.gp, tileManager);
-                if (!collisionDetection.isCollisionDetected(this, newX, newY)) {
-                    // No collision, update position
-                    x = newX;
-                    y = newY;
-                }
-            }
-
-            // Handle sprite animation for movement
-            if (isMoving) {
-                spriteCounter++;
-                if (spriteCounter > 12) {
-                    spriteNum = (spriteNum == 1) ? 2 : 1;
-                    spriteCounter = 0;
-                }
-            } else {
-                spriteNum = 1; // Reset to the first sprite when idle
-            }
-
-            prevMoving = isMoving;
-        } else {
-            System.out.println("KeyHandler is null");
-        }
-    }*/
     public void update() {
         boolean isMoving = false;
 
@@ -257,8 +185,9 @@ public class Player {
     // Inside Player class or movement handling logic
 
     // Draw the player on the canvas
-    public void draw(GraphicsContext gc , Player localPlayer) {
-        Image image = switch (direction) {
+    // Helper method to get the current image based on direction and spriteNum
+    private Image getCurrentSprite() {
+        return switch (direction) {
             case "up" -> (spriteNum == 1) ? up1 : up2;
             case "down" -> (spriteNum == 1) ? down1 : down2;
             case "left" -> (spriteNum == 1) ? left1 : left2;
@@ -267,9 +196,33 @@ public class Player {
             case "idle_down" -> idleDown;
             default -> null;
         };
+    }
+
+    // Return the player's width (based on the current sprite)
+    public double getWidth() {
+        Image image = getCurrentSprite();
+        if (image != null) {
+            return image.getWidth(); // Get the width of the current sprite
+        } else {
+            return 50; // Default value if the image is null
+        }
+    }
+
+    // Return the player's height (based on the current sprite)
+    public double getHeight() {
+        Image image = getCurrentSprite();
+        if (image != null) {
+            return image.getHeight(); // Get the height of the current sprite
+        } else {
+            return 50; // Default value if the image is null
+        }
+    }
+
+    // Draw the player on the canvas
+    public void draw(GraphicsContext gc, Player localPlayer) {
+        Image image = getCurrentSprite();
 
         if (image != null) {
-
             double screenX = (x - localPlayer.getX()) + (GamePanel.gp.getScreenWidth() / 2) - 35; // Offset based on sprite width
             double screenY = (y - localPlayer.getY()) + (GamePanel.gp.getScreenHeight() / 2) - 35; // Offset based on sprite height
 
@@ -277,9 +230,8 @@ public class Player {
         } else {
             System.out.println("Image is null for direction: " + direction);
         }
-
-
     }
+
 
 }
 

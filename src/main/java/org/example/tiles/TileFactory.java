@@ -19,7 +19,7 @@ public class TileFactory {
         switch (tileChar) {
             case 'F':
                 tile = new Tile(TileType.FLOOR, false);
-                tile.setImage(new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Floor1.png"))));
+                tile.setImage(new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Floor2.png"))));
                 break;
             case 'f':
                 tile = new Tile(TileType.FLOOR, false);
