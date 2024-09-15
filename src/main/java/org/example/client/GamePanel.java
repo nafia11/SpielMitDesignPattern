@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import org.example.entity.Player;
 import org.example.game.KeyHandler;
 import org.example.tiles.TileManager;
@@ -108,22 +109,25 @@ public class GamePanel extends Canvas {
         render();
     }
 
-    public void updatePlayerPosition(String username, double x, double y, String direction, int spriteNum) {
+    public void updatePlayerPosition(String username, double x, double y, String direction, int spriteNum, int interactionCount) {
         Player player = players.get(username);
         if (player != null) {
             player.setPosition(x, y);
             player.setDirection(direction);
             player.setSpriteNum(spriteNum);
-            System.out.println("gamepanel" + x +""+y);
+            player.setInteractionCount(interactionCount); // Update the interaction count
+            System.out.println("gamepanel" + x + "" + y);
         } else {
             player = new Player(username, null);
             player.setPosition(x, y);
             player.setDirection(direction);
             player.setSpriteNum(spriteNum);
+            player.setInteractionCount(interactionCount); // Set the interaction count for a new player
             players.put(username, player);
         }
         render();
     }
+
 
 
     private void render() {
@@ -136,7 +140,25 @@ public class GamePanel extends Canvas {
         for (Player player : players.values()) {
             player.draw(gc, localPlayer);
         }
+
+        // Draw interaction counts
+        drawInteractionCounts();
     }
+
+    private void drawInteractionCounts() {
+        gc.setFill(Color.BLACK); // Set the text color
+        gc.setFont(new Font("Arial", 20.0)); // Set the font size and type
+
+        int yOffset = 20; // Start position for the text on the y-axis
+        for (Player player : players.values()) {
+            String text = player.getUsername() + ": " + player.getInteractionCount() + " points";
+            gc.fillText(text, 20, yOffset); // Draw the text on the canvas at a fixed position
+            yOffset += 30; // Move down for the next player's interaction count
+        }
+    }
+
+
+
 
     public Map<String, Player> getPlayers() {
         return players;

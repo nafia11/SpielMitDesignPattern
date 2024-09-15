@@ -114,16 +114,17 @@ public class GameClient {
             }
         } else if (message.startsWith("POSITION_UPDATE")) {
             String[] parts = message.substring(16).split(",");
-            if (parts.length >= 5) { // Ensure there are at least 5 parts
+            if (parts.length >= 6) { // Ensure there are at least 6 parts
                 String username = parts[0].trim();
                 try {
                     double x = Double.parseDouble(parts[1].trim());
                     double y = Double.parseDouble(parts[2].trim());
                     String direction = parts[3].trim();
                     int spriteNum = Integer.parseInt(parts[4].trim());
+                    int interactionCount = Integer.parseInt(parts[5].trim()); // Parse interaction count
 
                     Platform.runLater(() -> {
-                        MainApp.getGamePanel().updatePlayerPosition(username, x, y, direction, spriteNum);
+                        MainApp.getGamePanel().updatePlayerPosition(username, x, y, direction, spriteNum, interactionCount);
                     });
                 } catch (NumberFormatException e) {
                     System.err.println("Error parsing position update: " + e.getMessage());
@@ -132,6 +133,7 @@ public class GameClient {
                 System.err.println("Invalid POSITION_UPDATE message format: " + message);
             }
         }
+
 
         else if (message.startsWith("INITIAL_POSITION")) {
             String data = message.substring("INITIAL_POSITION ".length()).trim();
@@ -203,3 +205,4 @@ public class GameClient {
         Application.launch(MainApp.class, args);
     }
 }
+

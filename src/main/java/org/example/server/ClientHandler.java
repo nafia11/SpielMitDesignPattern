@@ -104,8 +104,8 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void notifyPositionUpdate(String username, double x, double y, String direction, int spriteNum) {
-        GameServer.getInstance().broadcastPositionUpdate(username, x, y, direction, spriteNum);
+    public void notifyPositionUpdate(String username, double x, double y, String direction, int spriteNum, int interactionCount) {
+        GameServer.getInstance().broadcastPositionUpdate(username, x, y, direction, spriteNum, interactionCount);
     }
 
 

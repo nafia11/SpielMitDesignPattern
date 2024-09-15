@@ -81,14 +81,15 @@ public class GameState {
             System.out.println("Updated username from " + oldUsername + " to " + newUsername);
         }
     }
-    public void updatePlayerPosition(String username, double x, double y, String direction, int spriteNum) {
+    public void updatePlayerPosition(String username, double x, double y, String direction, int spriteNum, int interactionCount) {
         Player player = playerMap.get(username);
         if (player != null) {
             player.setX(x);
             player.setY(y);
             player.setDirection(direction);
             player.setSpriteNum(spriteNum);
-            System.out.println("Updated position for " + username + ": " + x + ", " + y + " direction: " + direction + " sprite: " + spriteNum);
+            player.setInteractionCount(interactionCount); // Set interaction count
+            System.out.println("Updated position for " + username + ": " + x + ", " + y + " direction: " + direction + " sprite: " + spriteNum + " interaction count: " + interactionCount);
         } else {
             System.err.println("Player with username " + username + " not found.");
         }

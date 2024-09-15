@@ -246,7 +246,7 @@ public class Player {
     // Send position update to the server
     private void sendPositionUpdate(String username, double x, double y) {
         //String message = String.format("POSITION_UPDATE %s,%f,%f,%s,%d", username, x, y, direction, spriteNum);
-        String message = "POSITION_UPDATE " + username + "," + x + "," + y + ","+direction +","+ spriteNum;
+        String message = "POSITION_UPDATE " + username + "," + x + "," + y + "," + direction + "," + spriteNum + "," + interactionCount;
         System.out.println(message);
         GameClient.getInstance().sendMessage(message);
     }
@@ -285,6 +285,14 @@ public class Player {
         } else {
             return 50; // Default value if the image is null
         }
+    }
+
+    public int getInteractionCount() {
+        return interactionCount;
+    }
+
+    public void setInteractionCount(int interactionCount) {
+        this.interactionCount = interactionCount;
     }
 
     // Draw the player on the canvas
