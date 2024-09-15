@@ -44,7 +44,7 @@ public class TileFactory {
                 tile.setImage(new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Block2.png"))));
                 tile.setCollision(true);
                 break;
-            case 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U':
+            case 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U','V', 'W', 'X', 'Y', 'Z' :
                 tile = new AnimatedTile(TileType.CHEST, true,
                         new Image[]{
                                 new Image(Objects.requireNonNull(TileFactory.class.getResourceAsStream("/tiles/Box1.png"))),

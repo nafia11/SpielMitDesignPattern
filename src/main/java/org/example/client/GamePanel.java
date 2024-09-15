@@ -33,7 +33,7 @@ public class GamePanel extends Canvas {
     private GraphicsContext gc;
 
     private long startTime;
-    private final long gameDuration = 60000 ; // 1 minute
+    private final long gameDuration = 20000 ; // 1 minute
     private boolean gameEnded = false;
 
     public GamePanel(String localUsername) {
