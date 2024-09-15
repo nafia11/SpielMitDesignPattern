@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.example.entity.Player;
 import org.example.game.KeyHandler;
+import org.example.lobby.MainApp;
 import org.example.tiles.TileManager;
 
 import java.util.HashMap;
@@ -27,37 +28,35 @@ public class GamePanel extends Canvas {
 
 
     private KeyHandler keyHandler;
-    private Player localPlayer; // Store the local player instance
+    private Player localPlayer;
     private Map<String, Player> players;
     private GraphicsContext gc;
 
+    private long startTime;
+    private final long gameDuration = 60000 ; // 1 minute
+    private boolean gameEnded = false;
+
     public GamePanel(String localUsername) {
         gp = this;
-        //super();
         this.players = new HashMap<>();
         this.gc = this.getGraphicsContext2D();
         initialize();
         this.setWidth(screenWidth);
         this.setHeight(screenHeight);
 
-        // Initialize TileManager
         tileM = new TileManager(this);
         tileM.getMapData().printBlockLocations();
         tileM.getMapData().printChestLocations();
 
-        // Initialize KeyHandler
         this.keyHandler = new KeyHandler();
 
-        // Ensure the canvas can receive key events
         this.setFocusTraversable(true);
         this.setOnKeyPressed(keyHandler::handleKeyPress);
         this.setOnKeyReleased(keyHandler::handleKeyRelease);
 
-        // Create the local player and assign the key handler to it
         this.localPlayer = new Player(localUsername, keyHandler);
         addPlayer(localPlayer);
 
-        // Request focus to capture key inputs
         this.requestFocus();
 
         startGameLoop();
@@ -72,17 +71,61 @@ public class GamePanel extends Canvas {
     }
 
     private void startGameLoop() {
-        // Set up an AnimationTimer to check key states and update the local player's position
+        startTime = System.currentTimeMillis();
+
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (localPlayer != null) {
-                    localPlayer.update(); // Only update the local player
+                if (!gameEnded) {
+                    updateTimer();
+                    localPlayer.update(); // Update the local player
+                    render();
                 }
-                render();
             }
         }.start();
     }
+
+    private void updateTimer() {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        long timeLeft = gameDuration - elapsedTime;
+
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }
+
+    private void drawTimer() {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        long timeLeft = gameDuration - elapsedTime;
+
+        if (timeLeft > 0) {
+            gc.setFill(Color.WHITE);
+            gc.setFont(javafx.scene.text.Font.font(20));
+
+            gc.fillText("Timer: " + (timeLeft / 1000) + " sec", 500, 20);
+        }
+    }
+
+    private void endGame() {
+        if (!gameEnded) {
+            gameEnded = true;
+            // Determine the winner
+            Player winner = players.values().stream()
+                    .max((p1, p2) -> Integer.compare(p1.getInteractionCount(), p2.getInteractionCount()))
+                    .orElse(null);
+
+            String winnerMessage;
+            if (winner != null) {
+                winnerMessage = "Game Over! \nWinner: " + winner.getUsername() + " with " + winner.getInteractionCount() + " Chests";
+            } else {
+                winnerMessage = "Game Over! No players.";
+            }
+
+            // Show game over message
+            MainApp.showGameOverMessage(winnerMessage);
+        }
+    }
+
 
     public Player getLocalPlayer() {
         return localPlayer;
@@ -115,14 +158,14 @@ public class GamePanel extends Canvas {
             player.setPosition(x, y);
             player.setDirection(direction);
             player.setSpriteNum(spriteNum);
-            player.setInteractionCount(interactionCount); // Update the interaction count
+            player.setInteractionCount(interactionCount);
             System.out.println("gamepanel" + x + "" + y);
         } else {
             player = new Player(username, null);
             player.setPosition(x, y);
             player.setDirection(direction);
             player.setSpriteNum(spriteNum);
-            player.setInteractionCount(interactionCount); // Set the interaction count for a new player
+            player.setInteractionCount(interactionCount);
             players.put(username, player);
         }
         render();
@@ -133,31 +176,26 @@ public class GamePanel extends Canvas {
     private void render() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
 
-        // Draw the world (tiles) relative to the player's position
         tileM.draw(gc);
-
-        // Draw all players relative to the local player
         for (Player player : players.values()) {
             player.draw(gc, localPlayer);
         }
 
-        // Draw interaction counts
         drawInteractionCounts();
+        drawTimer();
     }
 
     private void drawInteractionCounts() {
-        gc.setFill(Color.BLACK); // Set the text color
+        gc.setFill(Color.WHITE);
         gc.setFont(new Font("Arial", 20.0)); // Set the font size and type
 
-        int yOffset = 20; // Start position for the text on the y-axis
+        int yOffset = 20;
         for (Player player : players.values()) {
             String text = player.getUsername() + ": " + player.getInteractionCount() + " points";
-            gc.fillText(text, 20, yOffset); // Draw the text on the canvas at a fixed position
-            yOffset += 30; // Move down for the next player's interaction count
+            gc.fillText(text, 20, yOffset);
+            yOffset += 30;
         }
     }
-
-
 
 
     public Map<String, Player> getPlayers() {

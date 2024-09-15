@@ -4,9 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -20,6 +18,9 @@ public class MainApp extends Application {
     private static String username;
     private static Stage primaryStage;
     private static GamePanel gamePanel;
+    private static StackPane gameRootPane;
+
+
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -73,26 +74,25 @@ public class MainApp extends Application {
         primaryStage.setTitle("Game Lobby");
         primaryStage.setScene(scene);
 
-        // Request focus for another element or the root
         scene.getRoot().requestFocus();
 
         primaryStage.show();
     }
 
+
     public static void showGameWindow() {
         Platform.runLater(() -> {
-            System.out.println("I am in mainapp");
-            System.out.println("starting gamepanel");
-            GamePanel gamePanel = new GamePanel(username); // Pass the username here
-            MainApp.setGamePanel(gamePanel); // Initialize GamePanel
-            StackPane root = new StackPane(gamePanel);  // Create a StackPane and add the GamePanel to it
-            Scene scene = new Scene(root, gamePanel.getScreenWidth(), gamePanel.getScreenHeight()); // Use getScreenWidth and getScreenHeight for Scene size
+            GamePanel gamePanel = new GamePanel(username);
+            MainApp.setGamePanel(gamePanel);
+            gameRootPane = new StackPane(gamePanel);
+            Scene scene = new Scene(gameRootPane, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
             Stage gameStage = new Stage();
             gameStage.setTitle("Game");
             gameStage.setScene(scene);
             gameStage.show();
         });
     }
+
 
 
     public static void setGamePanel(GamePanel panel) {
@@ -106,4 +106,28 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public static void showWinnerDialog(String winnerName, int interactions) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Over");
+            alert.setHeaderText("Game Over!");
+            alert.setContentText("Winner: " + winnerName + " with " + interactions + " interactions.");
+            alert.showAndWait();
+        });
+    }
+    public static void showGameOverMessage(String message) {
+        Platform.runLater(() -> {
+            Label gameOverLabel = new Label(message);
+            gameOverLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: red; -fx-background-color: rgba(0, 0, 0, 0.7);");
+            gameOverLabel.setTranslateY(-50);
+
+            if (gameRootPane != null) {
+                gameRootPane.getChildren().add(gameOverLabel);
+            }
+        });
+    }
+
+
+
 }
