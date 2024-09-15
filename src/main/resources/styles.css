@@ -1,18 +1,8 @@
 /* styles.css */
 
-/*.username-display {*/
-/*    -fx-background-color: #f0f0f0;*/
-/*    -fx-background-radius: 10;*/
-/*    -fx-padding: 5 10;*/
-/*    -fx-font-size: 14px;*/
-/*    -fx-border-color: #ccc;*/
-/*    -fx-border-radius: 10;*/
-/*    -fx-border-width: 1;*/
-/*    -fx-font-weight: bold; !* Make the text bold *!*/
-/*}*/
-
+/* Username Display */
 .username-display {
-    -fx-background-color: rgba(75, 39, 13, 0.5); /* Set a brown background color with 50% opacity */
+    -fx-background-color: green; /* Set background color */
     -fx-background-radius: 10;
     -fx-padding: 5 10;
     -fx-font-size: 14px;
@@ -20,8 +10,31 @@
     -fx-border-radius: 10;
     -fx-border-width: 1;
     -fx-font-weight: bold; /* Make the text bold */
-    -fx-text-fill: #0d0d0e; /* Set the text color to a yellowish color */
+    -fx-text-fill: black; /* Set the text color to black for readability */
+
+    /* Add a shadow effect to simulate a border around the text */
+    -fx-effect: dropshadow(gaussian, black, 2, 0, 0, 0); /* Creates a black shadow around the text */
 }
+
+/* Player Figures Pane */
+/*#playerFiguresPane {
+    -fx-background-color: white; *//* Set background to white *//*
+    -fx-border-color: #95b0e7; *//* Optional: border color *//*
+    -fx-border-width: 1; *//* Optional: border width *//*
+    -fx-border-radius: 10; *//* Optional: rounded corners *//*
+}*/
+/*
+.username-display {
+    -fx-background-color: rgba(75, 39, 13, 0.5); *//* Set a brown background color with 50% opacity *//*
+    -fx-background-radius: 10;
+    -fx-padding: 5 10;
+    -fx-font-size: 14px;
+    -fx-border-color: #95b0e7;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-font-weight: bold; *//* Make the text bold *//*
+    -fx-text-fill: #0d0d0e; *//* Set the text color to a yellowish color *//*
+}*/
 
 
 

@@ -6,6 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.client.GameClient;
@@ -44,17 +47,25 @@ public class LobbyController {
             ImageView playerFigure = new ImageView(new Image(getClass().getResourceAsStream("/images/player_icon.png")));
             playerFigure.setFitWidth(100);
             playerFigure.setFitHeight(100);
-            playerFigure.setLayoutX(10 + (i * 100)); // Adjust layout as needed
-            playerFigure.setLayoutY(5);
+            playerFigure.setLayoutX(135 + (i * 100)); // Adjust layout as needed
+            playerFigure.setLayoutY(15);
 
             // Create a text label for the player name
             Text playerName = new Text(player);
-            playerName.setX(30 + (i * 100)); // Adjust layout as needed
-            playerName.setY(100); // Position below the figure
+            playerName.setX(165 + (i * 100)); // Adjust layout as needed
+            playerName.setY(105); // Position below the figure
+            playerName.setFill(Color.WHITE); // Set the text fill color
+            playerName.setFont(Font.font("Arial", FontWeight.BOLD, 16)); // Set font size and style
+
+            // Set the stroke (border) for the text
+            playerName.setStroke(Color.BLACK); // Set border color to black
+            playerName.setStrokeWidth(1); // Set the thickness of the border
 
             playerFiguresPane.getChildren().addAll(playerFigure, playerName);
         }
     }
+
+
 
     @FXML
     private void sendMessage() {
